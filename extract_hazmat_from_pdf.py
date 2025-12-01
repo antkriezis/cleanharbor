@@ -2,33 +2,18 @@
 """
 Extract hazardous-material rows from an IHM PDF:
 1) Extract the entire PDF to text (page markers included)
-2) Call the Chat Completions API to keep only table rows (5.2+ / Part II & III)
+2) Call the Chat Completions API to keep only table rows (Part I/II/III)
 3) Return a single JSON matching the schema
 
-Run (from the ihm_parser/ folder):
-  $env:OPENAI_API_KEY="sk-..."  # Windows PowerShell
-  export OPENAI_API_KEY=sk-...  # macOS/Linux
-
-  python extract_hazmat_from_pdf.py \
-      --pdf "data/MV_EUROFERRY_OLYMPIA_IHM.pdf" \
-      --out "outputs/ihm_extract.json" \
-      --model "gpt-5"
+Can be run standalone or imported by main.py
 """
 
-import argparse
 import json
 import os
 from pathlib import Path
 
 import pdfplumber
 from openai import OpenAI
-
-# Optional .env loading
-try:
-    from dotenv import load_dotenv
-    load_dotenv()
-except Exception:
-    pass
 
 # ----------------------------
 # JSON Schema
@@ -120,7 +105,7 @@ def extract_full_pdf_text(pdf_path: Path) -> tuple[str, int]:
 # ----------------------------
 # OpenAI helpers
 # ----------------------------
-def call_single(client: OpenAI, model: str, full_text: str, schema_str: str) -> dict:
+def _call_single(client: OpenAI, model: str, full_text: str, schema_str: str) -> dict:
     """
     Attempt one single call with the entire PDF text.
     """
@@ -139,7 +124,7 @@ def call_single(client: OpenAI, model: str, full_text: str, schema_str: str) -> 
     )
     return json.loads(resp.choices[0].message.content)
 
-def call_chunked(client: OpenAI, model: str, full_text: str, schema_str: str, max_chars: int = 12000) -> dict:
+def _call_chunked(client: OpenAI, model: str, full_text: str, schema_str: str, max_chars: int = 12000) -> dict:
     """
     Fallback: if entire text is too large, split by page marker and merge results.
     """
@@ -167,7 +152,8 @@ def call_chunked(client: OpenAI, model: str, full_text: str, schema_str: str, ma
         chunks.append(cur)
 
     all_rows = []
-    for c in chunks:
+    for idx, c in enumerate(chunks, start=1):
+        print(f"   Processing chunk {idx}/{len(chunks)}...")
         prompt = (
             f"{PROMPT_INSTRUCTIONS}\n{TIGHT_RULES}\n\n"
             f"JSON Schema:\n{schema_str}\n\n"
@@ -187,25 +173,38 @@ def call_chunked(client: OpenAI, model: str, full_text: str, schema_str: str, ma
     return {"document_meta": {}, "rows": all_rows}
 
 # ----------------------------
-# Main extraction pipeline
+# Main extraction function
 # ----------------------------
-def extract(pdf_path: Path, out_path: Path, model: str = "gpt-5") -> None:
+def extract(pdf_path: Path, out_path: Path, model: str = "gpt-5") -> dict:
+    """
+    Extract hazmat data from an IHM PDF and save to JSON.
+    
+    Args:
+        pdf_path: Path to the input PDF
+        out_path: Path where JSON output will be saved
+        model: OpenAI model to use
+        
+    Returns:
+        The extracted data dictionary
+    """
     if not os.getenv("OPENAI_API_KEY"):
         raise SystemExit("OPENAI_API_KEY not set (use .env or export in shell).")
 
     client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
     out_path.parent.mkdir(parents=True, exist_ok=True)
 
+    print(f"   Reading PDF: {pdf_path.name}")
     full_text, pages_total = extract_full_pdf_text(pdf_path)
     schema_str = json.dumps(EXTRACTION_SCHEMA)
 
+    print(f"   Calling OpenAI ({model})...")
     # Try a single call first
     try:
-        data = call_single(client, model, full_text, schema_str)
+        data = _call_single(client, model, full_text, schema_str)
     except Exception as e:
-        # If context too large / any failure, fallback to chunked without bothering you
-        print(f"ℹ️  Falling back to chunked mode: {e}")
-        data = call_chunked(client, model, full_text, schema_str, max_chars=12000)
+        # If context too large / any failure, fallback to chunked
+        print(f"   ℹ️  Falling back to chunked mode: {e}")
+        data = _call_chunked(client, model, full_text, schema_str, max_chars=12000)
 
     # Build consistent final JSON
     result = {
@@ -217,66 +216,34 @@ def extract(pdf_path: Path, out_path: Path, model: str = "gpt-5") -> None:
     }
 
     out_path.write_text(json.dumps(result, indent=2, ensure_ascii=False), encoding="utf-8")
-    print(f"✅ Wrote {out_path}  ({len(result['rows'])} rows)")
+    print(f"   ✅ Wrote {out_path}  ({len(result['rows'])} rows)")
+    
+    return result
+
 
 # ----------------------------
-# CLI
+# Standalone CLI (for testing this module directly)
 # ----------------------------
-def main() -> None:
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--pdf", required=True, help="Path to the IHM PDF (relative or absolute)")
-    ap.add_argument("--out", default="outputs/ihm_extract.json", help="Where to write the JSON")
-    ap.add_argument("--model", default="gpt-5", help="Model name (e.g., gpt-5, gpt-4o, gpt-4o-mini)")
+if __name__ == "__main__":
+    import argparse
+    from dotenv import load_dotenv
+    load_dotenv()
+    
+    ap = argparse.ArgumentParser(description="Extract hazmat from IHM PDF (standalone)")
+    ap.add_argument("--pdf", required=True, help="Path to the IHM PDF")
+    ap.add_argument("--out", default=None, help="Output JSON path")
+    ap.add_argument("--model", default="gpt-5", help="OpenAI model")
     args = ap.parse_args()
 
     pdf = Path(args.pdf).expanduser().resolve()
     
-    pdf_stem = pdf.stem
-    if args.out == "outputs/ihm_extract.json":
-        out = Path(f"outputs/{pdf_stem}_extract.json").resolve()
-    else:
+    if args.out:
         out = Path(args.out).expanduser().resolve()
+    else:
+        out = Path(f"outputs/JSON Extractions/{pdf.stem}_extract.json").resolve()
 
     if not pdf.exists():
-        raise SystemExit(f"PDF not found: {pdf}")
+        raise SystemExit(f"❌ PDF not found: {pdf}")
 
     extract(pdf, out, model=args.model)
 
-# ----------------------------
-# DEBUG: Just extract and show pdfplumber output
-# ----------------------------
-if __name__ == "__main__":
-    '''
-    ap = argparse.ArgumentParser()
-    ap.add_argument("--pdf", required=True, help="Path to the IHM PDF (relative or absolute)")
-    ap.add_argument("--out", default="outputs/pdfplumber_text.json", help="Where to save extracted text")
-    args = ap.parse_args()
-
-    pdf_path = Path(args.pdf).expanduser().resolve()
-    out_path = Path(args.out).expanduser().resolve()
-
-    if not pdf_path.exists():
-        raise SystemExit(f"❌ PDF not found: {pdf_path}")
-
-    print(f"📖 Extracting text from {pdf_path.name} using pdfplumber...")
-
-    import pdfplumber
-    text_blocks = []
-    with pdfplumber.open(str(pdf_path)) as pdf:
-        for i, page in enumerate(pdf.pages, start=1):
-            text = (page.extract_text() or "").strip()
-            text_blocks.append(f"--- PAGE {i} ---\n{text}")
-    full_text = "\n\n".join(text_blocks)
-
-    # Save the raw text to a file for inspection
-    out_path.parent.mkdir(parents=True, exist_ok=True)
-    out_path.write_text(full_text, encoding="utf-8")
-
-    # Print debug info
-    print(f"✅ Extracted {len(text_blocks)} pages.")
-    print(f"📄 Saved extracted text to: {out_path}")
-    print("\n--- SAMPLE OUTPUT (first 1000 characters) ---")
-    print(full_text[:1000])
-    print("\n--------------------------------------------")
-    '''
-    main()

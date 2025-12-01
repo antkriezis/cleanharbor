@@ -1,83 +1,60 @@
 {
   "document_meta": {
     "title": "Inventory Hazardous Material (IHM)",
-    "pages_total": 19,
-    "chapters_covered": [
-      "5.2",
-      "5.3",
-      "5.4",
-      "5.5",
-      "5.6",
-      "6",
-      "7",
-      "7.1",
-      "7.2",
-      "7.3",
-      "7.4"
-    ]
+    "pages_total": 19
   },
   "rows": [
     {
-      "chapter": "5.5",
-      "section_title": "STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
-      "table_id": "unknown",
-      "material": "Lead",
-      "item_name": "COMMON USE Battery",
-      "location": "5th Deck – Battery Room",
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
+      "item_name": "Batteries (COMMON USE)",
+      "location": "Battery Room, 5th Deck",
       "quantity_value": 8,
       "quantity_unit": "pcs",
       "hazard_flags": [
-        "lead",
-        "battery",
         "lead-battery"
       ],
       "remarks": "",
       "page": 11,
-      "row_index": 1,
-      "source_text": "COMMON USE Battery 5th Deck – Battery Room Lead 8 Batteries"
+      "row_index": 76,
+      "source_text": "COMMON USE Battery Battery Room 5th Deck – Lead 8 Batteries"
     },
     {
-      "chapter": "5.5",
-      "section_title": "STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
-      "table_id": "unknown",
-      "material": "Lead",
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
       "item_name": "GMDSS Batteries",
-      "location": "9th Deck - Navigation Room",
+      "location": "Navigation Room, 9th Deck",
       "quantity_value": 2,
       "quantity_unit": "pcs",
       "hazard_flags": [
-        "lead",
-        "battery",
         "lead-battery"
       ],
       "remarks": "",
       "page": 11,
-      "row_index": 2,
+      "row_index": 77,
       "source_text": "GMDSS Batteries 9th Deck - Navigation Room Lead 2 Batteries"
     },
     {
-      "chapter": "5.5",
-      "section_title": "STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
-      "table_id": "unknown",
-      "material": "Lead",
-      "item_name": "Emergency Generator Batteries",
-      "location": "Platform 3/4 - Emergency Generator Room",
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
+      "item_name": "Emergency Generator Room Batteries",
+      "location": "Emergency Generator Room, Platform 3/4",
       "quantity_value": 2,
       "quantity_unit": "pcs",
       "hazard_flags": [
-        "lead",
-        "battery",
         "lead-battery"
       ],
       "remarks": "",
       "page": 11,
-      "row_index": 3,
-      "source_text": "Emergency Generator Batteries Platform 3/4 - ... Room Lead 2 Batteries"
+      "row_index": 78,
+      "source_text": "Emergency Generator Room Platform 3/4 ... Lead 2 Batteries"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 8 STB",
@@ -92,9 +69,8 @@
       "source_text": "WT 8 STB Very Low Sulphur Fuel Oil 2,7 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 8 PORT",
@@ -109,9 +85,8 @@
       "source_text": "WT 8 PORT Very Low Sulphur Fuel Oil 3,3 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 9 STB",
@@ -126,26 +101,24 @@
       "source_text": "WT 9 STB Very Low Sulphur Fuel Oil 4,3 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 9 PORT",
-      "quantity_value": 4,
+      "quantity_value": 4.0,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
-      "remarks": "",
+      "remarks": "UNPUMPABLE",
       "page": 13,
       "row_index": 4,
-      "source_text": "WT 9 PORT Very Low Sulphur Fuel Oil 4,0"
+      "source_text": "WT 9 PORT Very Low Sulphur Fuel Oil 4,0 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 10 STB",
@@ -160,9 +133,8 @@
       "source_text": "WT 10 STB Very Low Sulphur Fuel Oil 2,9 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 10 PORT",
@@ -177,9 +149,8 @@
       "source_text": "WT 10 PORT Very Low Sulphur Fuel Oil 6,5 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 11 STB",
@@ -194,9 +165,8 @@
       "source_text": "WT 11 STB Very Low Sulphur Fuel Oil 3,3 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
       "item_name": "",
       "location": "WT 11 PORT",
@@ -211,80 +181,75 @@
       "source_text": "WT 11 PORT Very Low Sulphur Fuel Oil 5,7 UNPUMPABLE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
-      "item_name": "",
-      "location": "T 12 STB - Service Tank MMPP",
+      "item_name": "Service Tank MMPP",
+      "location": "T 12 STB",
       "quantity_value": 1.7,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
-      "remarks": "UNPUMPABLE",
+      "remarks": "UNPUMPABLE (Service Tank MMPP)",
       "page": 13,
       "row_index": 9,
-      "source_text": "T 12 STB Very Low Sulphur Fuel Oil 1,7 Service Tank MMPP UNPUMPABLE"
+      "source_text": "T 12 STB Very Low Sulphur Fuel Oil 1,7 UNPUMPABLE Service Tank MMPP"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
-      "item_name": "",
-      "location": "T 13 STB - Settling Tank MMPP",
-      "quantity_value": 3,
+      "item_name": "Settling Tank MMPP",
+      "location": "T 13 STB",
+      "quantity_value": 3.0,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
-      "remarks": "UNPUMPABLE",
+      "remarks": "UNPUMPABLE (Settling Tank MMPP)",
       "page": 13,
       "row_index": 10,
-      "source_text": "T 13 STB Very Low Sulphur Fuel Oil 3,0 Settling Tank MMPP UNPUMPABLE"
+      "source_text": "T 13 STB Very Low Sulphur Fuel Oil 3,0 UNPUMPABLE Settling Tank MMPP"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
-      "item_name": "",
-      "location": "T 13 PORT - Settling Tank MMPP",
-      "quantity_value": 3,
+      "item_name": "Settling Tank MMPP",
+      "location": "T 13 PORT",
+      "quantity_value": 3.0,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
-      "remarks": "UNPUMPABLE",
+      "remarks": "UNPUMPABLE (Settling Tank MMPP)",
       "page": 13,
       "row_index": 11,
-      "source_text": "T 13 PORT Very Low Sulphur Fuel Oil 3,0 Settling Tank MMPP UNPUMPABLE"
+      "source_text": "T 13 PORT Very Low Sulphur Fuel Oil 3,0 UNPUMPABLE Settling Tank MMPP"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
-      "item_name": "",
-      "location": "T 35 STB - Overflow",
+      "item_name": "Service Tank MMPP (Overflow)",
+      "location": "T 35 STB",
       "quantity_value": 0.5,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
-      "remarks": "UNPUMPABLE",
+      "remarks": "UNPUMPABLE (Overflow)",
       "page": 13,
       "row_index": 12,
       "source_text": "T 35 STB Very Low Sulphur Fuel Oil 0,5 UNPUMPABLE Overflow"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Very Low Sulphur Fuel Oil",
-      "item_name": "",
-      "location": "T 14 A - Service Tk",
+      "item_name": "Service Tk",
+      "location": "T 14 A",
       "quantity_value": 4.1,
       "quantity_unit": "m3",
       "hazard_flags": [
@@ -292,16 +257,15 @@
       ],
       "remarks": "UNPUMPABLE",
       "page": 13,
-      "row_index": 13,
+      "row_index": 12,
       "source_text": "T 14 A Very Low Sulphur Fuel Oil 4,1 UNPUMPABLE Service Tk"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Marine Gasoil (Sulphur 0.01%)",
+      "material": "Marine Gasoil Sulphur 0,01%",
       "item_name": "",
-      "location": "T 12 PORT - MMPP/Boiler",
+      "location": "T 12 PORT",
       "quantity_value": 0.1,
       "quantity_unit": "m3",
       "hazard_flags": [
@@ -309,31 +273,29 @@
       ],
       "remarks": "",
       "page": 13,
-      "row_index": 14,
-      "source_text": "T 12 PORT Marine Gasoil Sulphur 0,01% 0,1 MMPP/Boiler"
+      "row_index": 13,
+      "source_text": "T 12 PORT Marine Gasoil Sulphur 0,01% 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Marine Gasoil (Sulphur 0.01%)",
+      "material": "Marine Gasoil Sulphur 0,01%",
       "item_name": "",
       "location": "T 21",
-      "quantity_value": 1,
+      "quantity_value": 1.0,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
       "remarks": "",
       "page": 13,
-      "row_index": 15,
+      "row_index": 14,
       "source_text": "T 21 Marine Gasoil Sulphur 0,01% 1,0"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Marine Gasoil (Sulphur 0.01%)",
+      "material": "Marine Gasoil Sulphur 0,01%",
       "item_name": "",
       "location": "T 22",
       "quantity_value": 1.2,
@@ -343,16 +305,15 @@
       ],
       "remarks": "",
       "page": 13,
-      "row_index": 16,
+      "row_index": 15,
       "source_text": "T 22 Marine Gasoil Sulphur 0,01% 1,2"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Marine Gasoil (Sulphur 0.01%)",
-      "item_name": "",
-      "location": "T 38 - Service Tank DGE",
+      "material": "Marine Gasoil Sulphur 0,01%",
+      "item_name": "Service Tank DGE",
+      "location": "T 38",
       "quantity_value": 0.1,
       "quantity_unit": "m3",
       "hazard_flags": [
@@ -364,9 +325,8 @@
       "source_text": "T 38 Marine Gasoil Sulphur 0,01% 0,1 Service Tank DGE"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 15 PORT",
@@ -381,9 +341,8 @@
       "source_text": "T 15 PORT Lube oil 0,3"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 15 STB",
@@ -398,9 +357,8 @@
       "source_text": "T 15 STB Lube oil 0,9"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 32",
@@ -415,9 +373,8 @@
       "source_text": "T 32 Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 33",
@@ -432,9 +389,8 @@
       "source_text": "T 33 Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 34",
@@ -449,9 +405,8 @@
       "source_text": "T 34 Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 37 PORT",
@@ -466,9 +421,8 @@
       "source_text": "T 37 PORT Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 37 STB",
@@ -483,9 +437,8 @@
       "source_text": "T 37 STB Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Lube oil",
       "item_name": "",
       "location": "T 40",
@@ -500,9 +453,8 @@
       "source_text": "T 40 Lube oil 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "ME Lube Oil Drain",
       "item_name": "",
       "location": "T 16 A PORT",
@@ -513,13 +465,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 26,
+      "row_index": 30,
       "source_text": "T 16 A PORT ME Lube Oil Drain 2,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "ME Lube Oil Drain",
       "item_name": "",
       "location": "T 16 A STB",
@@ -530,13 +481,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 27,
+      "row_index": 31,
       "source_text": "T 16 A STB ME Lube Oil Drain 2,5"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "ME Lube Oil Drain",
       "item_name": "",
       "location": "T 16 B PORT",
@@ -547,13 +497,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 28,
+      "row_index": 32,
       "source_text": "T 16 B PORT ME Lube Oil Drain 2,5"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "ME Lube Oil Drain",
       "item_name": "",
       "location": "T 16 B STB",
@@ -564,13 +513,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 29,
+      "row_index": 33,
       "source_text": "T 16 B STB ME Lube Oil Drain 2,5"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Leakage Oil",
       "item_name": "",
       "location": "T 17",
@@ -581,13 +529,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 30,
+      "row_index": 34,
       "source_text": "T 17 Leakage Oil 0,7"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Waste Oil",
       "item_name": "",
       "location": "T 19",
@@ -598,30 +545,28 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 31,
+      "row_index": 36,
       "source_text": "T 19 Waste Oil 0,4"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Bilge Water",
       "item_name": "",
       "location": "T 20 STB",
-      "quantity_value": 3,
+      "quantity_value": 3.0,
       "quantity_unit": "m3",
       "hazard_flags": [
         "oil"
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 32,
+      "row_index": 37,
       "source_text": "T 20 STB Bilge Water 3,0"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "LO Sep. Sludge",
       "item_name": "",
       "location": "T 28 PORT",
@@ -633,13 +578,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 33,
+      "row_index": 38,
       "source_text": "T 28 PORT LO Sep.Sludge 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "LO Sep. Sludge",
       "item_name": "",
       "location": "T 28 STB",
@@ -651,13 +595,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 34,
+      "row_index": 39,
       "source_text": "T 28 STB LO Sep.Sludge 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "VLSFO Sep. Sludge",
       "item_name": "",
       "location": "T 29",
@@ -669,13 +612,12 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 35,
+      "row_index": 40,
       "source_text": "T 29 VLSFO Sep.Sludge 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Sludge",
       "item_name": "",
       "location": "T 30",
@@ -686,15 +628,14 @@
       ],
       "remarks": "",
       "page": 14,
-      "row_index": 36,
+      "row_index": 41,
       "source_text": "T 30 Sludge 0,1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Bilge well contents",
-      "item_name": "",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
       "location": "2° COPERTINO (DG2)",
       "quantity_value": 0.2,
       "quantity_unit": "m3",
@@ -703,15 +644,14 @@
       ],
       "remarks": "",
       "page": 15,
-      "row_index": 37,
+      "row_index": 73,
       "source_text": "2° COPERTINO (DG2) Bilge well 0,2"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Bilge well contents",
-      "item_name": "",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
       "location": "2° COPERTINO (DG1)",
       "quantity_value": 0.2,
       "quantity_unit": "m3",
@@ -720,15 +660,14 @@
       ],
       "remarks": "",
       "page": 15,
-      "row_index": 38,
+      "row_index": 74,
       "source_text": "2° COPERTINO (DG1) Bilge well 0,2"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
       "material": "Bilge water",
-      "item_name": "",
+      "item_name": "Bilge",
       "location": "1° COPERTINO (MMEE)",
       "quantity_value": 1,
       "quantity_unit": "m3",
@@ -737,15 +676,14 @@
       ],
       "remarks": "",
       "page": 15,
-      "row_index": 39,
+      "row_index": 75,
       "source_text": "1° COPERTINO (MMEE) Bilge 1"
     },
     {
-      "chapter": "6",
+      "chapter": "Part II",
       "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
-      "table_id": "unknown",
-      "material": "Bilge well contents",
-      "item_name": "",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
       "location": "2° Deck Bunker station STB",
       "quantity_value": 0.3,
       "quantity_unit": "m3",
@@ -754,86 +692,75 @@
       ],
       "remarks": "",
       "page": 15,
-      "row_index": 40,
+      "row_index": 76,
       "source_text": "2° Deck Bunker station STB Bilge well 0,3"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
       "material": "Battery",
-      "item_name": "Battery (Emergency diesel generator room)",
+      "item_name": "Battery",
       "location": "Em. diesel generator room",
       "quantity_value": 2,
       "quantity_unit": "pcs",
       "hazard_flags": [
-        "battery",
         "lead-battery"
-      ],
-      "remarks": "burned",
-      "page": 16,
-      "row_index": 1,
-      "source_text": "Em. diesel generator room Battery 2 pieces burned"
-    },
-    {
-      "chapter": "7.1",
-      "section_title": "III-1 - STORES",
-      "table_id": "unknown",
-      "material": "Battery",
-      "item_name": "Battery UPS",
-      "location": "Bridge-wheelhouse",
-      "quantity_value": 42,
-      "quantity_unit": "pcs",
-      "hazard_flags": [
-        "battery",
-        "lead-battery"
-      ],
-      "remarks": "burned",
-      "page": 16,
-      "row_index": 2,
-      "source_text": "Bridge-wheelhouse Battery ups 42 pieces burned"
-    },
-    {
-      "chapter": "7.1",
-      "section_title": "III-1 - STORES",
-      "table_id": "unknown",
-      "material": "Paint and paint related products (Catalyzers)",
-      "item_name": "Paint and paint related products",
-      "location": "Paint store",
-      "quantity_value": 400,
-      "quantity_unit": "L",
-      "hazard_flags": [
-        "paint"
       ],
       "remarks": "burned",
       "page": 16,
       "row_index": 3,
-      "source_text": "Paint store Paint and paint related products (Catalyzers) 400 LT burned"
+      "source_text": "Em. diesel generator room Battery 2 pieces burned"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
-      "material": "Paint and paint related products (Catalyzers)",
-      "item_name": "Paint and paint related products",
-      "location": "Paint store",
-      "quantity_value": 3000,
-      "quantity_unit": "L",
+      "material": "Battery",
+      "item_name": "UPS batteries",
+      "location": "Bridge-wheelhouse",
+      "quantity_value": 42,
+      "quantity_unit": "pcs",
       "hazard_flags": [
-        "paint"
+        "lead-battery"
       ],
       "remarks": "burned",
       "page": 16,
       "row_index": 4,
-      "source_text": "Paint store Paint and paint related products (Catalyzers) 3000 LT burned"
+      "source_text": "Bridge-wheelhouse Battery ups 42 pieces burned"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
-      "material": "Fuel residues (oil)",
-      "item_name": "Fuel tanks residues",
-      "location": "Purifier Room - Fuel tanks",
+      "material": "Paint and paint related products (Catalyzers)",
+      "item_name": "Paint products",
+      "location": "Paint store",
+      "quantity_value": 400,
+      "quantity_unit": "L",
+      "hazard_flags": [],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 11,
+      "source_text": "Paint and paint related products (Catalyzers) 400 LT burned Paint store"
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Paint and paint related products (Catalyzers)",
+      "item_name": "Paint products",
+      "location": "Paint store",
+      "quantity_value": 3000,
+      "quantity_unit": "L",
+      "hazard_flags": [],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 11,
+      "source_text": "Paint and paint related products (Catalyzers) 3000 LT burned Paint store"
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Fuel residues",
+      "item_name": "Fuel tanks",
+      "location": "Fuel tanks",
       "quantity_value": 44.9,
       "quantity_unit": "m3",
       "hazard_flags": [
@@ -841,15 +768,14 @@
       ],
       "remarks": "UNPUMPABLE",
       "page": 17,
-      "row_index": 5,
-      "source_text": "Purifier Room Fuel tanks Residues 44,9 m3 UNPUMPABLE"
+      "row_index": 17,
+      "source_text": "Fuel tanks Residues 44,9 m3 UNPUMPABLE"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
       "material": "Lube oil residues",
-      "item_name": "Lube oil tanks residues",
+      "item_name": "Lube oil tanks",
       "location": "Lube oil tanks",
       "quantity_value": 2.1,
       "quantity_unit": "m3",
@@ -858,15 +784,14 @@
       ],
       "remarks": "UNPUMPABLE",
       "page": 17,
-      "row_index": 6,
+      "row_index": 18,
       "source_text": "Lube oil tanks Residues 2,1 m3 UNPUMPABLE"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
       "material": "Sludge/sewage residues",
-      "item_name": "Sludge/sewage tanks residues",
+      "item_name": "Sludge/sewage tanks",
       "location": "Sludge/sewage tanks",
       "quantity_value": 8.5,
       "quantity_unit": "m3",
@@ -875,32 +800,28 @@
       ],
       "remarks": "UNPUMPABLE",
       "page": 17,
-      "row_index": 7,
+      "row_index": 19,
       "source_text": "Sludge/sewage tanks Residues 8,5 m3 UNPUMPABLE"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
       "material": "Chemical and chemical related products",
-      "item_name": "Chemical and chemical related products",
+      "item_name": "Chemicals",
       "location": "Chemical store",
       "quantity_value": 1850,
       "quantity_unit": "L",
-      "hazard_flags": [
-        "chemical"
-      ],
+      "hazard_flags": [],
       "remarks": "",
       "page": 17,
-      "row_index": 8,
-      "source_text": "Chemical store Chemical and chemical related products 1850 LT"
+      "row_index": 23,
+      "source_text": "Chemical and chemical related products Chemical store 1850 LT"
     },
     {
-      "chapter": "7.1",
+      "chapter": "Part III",
       "section_title": "III-1 - STORES",
-      "table_id": "unknown",
-      "material": "HFC gas (R448)",
-      "item_name": "HFC gas R448",
+      "material": "HFC gas R448",
+      "item_name": "",
       "location": "Deck 3",
       "quantity_value": 459,
       "quantity_unit": "kg",
@@ -909,13 +830,12 @@
       ],
       "remarks": "",
       "page": 17,
-      "row_index": 9,
+      "row_index": 24,
       "source_text": "Deck 3 HFC gas R448 459 KG"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Diesel generators",
       "location": "Engine room",
@@ -930,9 +850,8 @@
       "source_text": "Diesel generators Engine room 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Alternator bearings",
       "location": "Engine room",
@@ -947,9 +866,8 @@
       "source_text": "Alternator bearings Engine room 0,04"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Anchor winches",
       "location": "Forecastle room",
@@ -964,9 +882,8 @@
       "source_text": "Anchor winches Forecastle room 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Lifeboat winches",
       "location": "Deck 5",
@@ -981,9 +898,8 @@
       "source_text": "Lifeboat winches Deck 5 0,05"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Main engines",
       "location": "Engine room",
@@ -998,9 +914,8 @@
       "source_text": "Main engines Engine room 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Engine / Pump reduction gearbox",
       "location": "Storage room",
@@ -1015,9 +930,8 @@
       "source_text": "Engine / Pump reduction gearbox Storage room 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Rec. gearbox",
       "location": "Engine room",
@@ -1032,9 +946,8 @@
       "source_text": "Rec. gearbox Engine room 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Compressors",
       "location": "Storage oil",
@@ -1049,9 +962,8 @@
       "source_text": "Compressors Storage oil 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Lubricating Oil",
       "item_name": "Rescue boats engines",
       "location": "Storage oil",
@@ -1066,10 +978,9 @@
       "source_text": "Rescue boats engines Storage oil 0,01"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
-      "material": "Hydraulic oil",
+      "material": "Lubricating Oil",
       "item_name": "Steering gears",
       "location": "Steering room",
       "quantity_value": 0.6,
@@ -1083,10 +994,9 @@
       "source_text": "Steering gears Steering room 0,6"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
-      "material": "Hydraulic oil",
+      "material": "Lubricating Oil",
       "item_name": "Bow thrusters (1 – 2)",
       "location": "Bow thruster room",
       "quantity_value": 0.3,
@@ -1100,11 +1010,10 @@
       "source_text": "Bow thrusters (1 – 2) Bow thruster room 0,3"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Hydraulic oil",
-      "item_name": "Hydraulic system drums fresh oil",
+      "item_name": "Hydraulic system",
       "location": "Plt 2/3 Aft stb",
       "quantity_value": 0.1,
       "quantity_unit": "m3",
@@ -1117,9 +1026,8 @@
       "source_text": "Hydraulic system Plt 2/3 Aft stb 0,1"
     },
     {
-      "chapter": "7.2",
+      "chapter": "Part III",
       "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "Hydraulic oil",
       "item_name": "Stern Thruster (3 – 4)",
       "location": "Steering gear room",
@@ -1134,9 +1042,8 @@
       "source_text": "Stern Thruster (3 – 4) Steering gear room 0,4"
     },
     {
-      "chapter": "7.3",
+      "chapter": "Part III",
       "section_title": "III-3 – GASES SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "HFC (R448)",
       "item_name": "ECR A/C system DG 1 room",
       "location": "ECR A/C system DG 1 room",
@@ -1147,13 +1054,12 @@
       ],
       "remarks": "",
       "page": 19,
-      "row_index": 1,
+      "row_index": 3,
       "source_text": "HFC (R448) ECR A/C system DG 1 room 5 KG"
     },
     {
-      "chapter": "7.3",
+      "chapter": "Part III",
       "section_title": "III-3 – GASES SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
-      "table_id": "unknown",
       "material": "HFC (R448)",
       "item_name": "ECR A/C system DG 2 room",
       "location": "ECR A/C system DG 2 room",
@@ -1164,26 +1070,8 @@
       ],
       "remarks": "",
       "page": 19,
-      "row_index": 2,
+      "row_index": 4,
       "source_text": "HFC (R448) ECR A/C system DG 2 room 5 KG"
-    },
-    {
-      "chapter": "7.4",
-      "section_title": "III-4 – REGULAR CONSUMABLE GOODS POTENTIALLY CONTAINING HAZARDOUS MATERIALS",
-      "table_id": "unknown",
-      "material": "Battery",
-      "item_name": "Emergency Diesel Generator battery",
-      "location": "Emergency Diesel Generator Room",
-      "quantity_value": "~",
-      "quantity_unit": "pcs",
-      "hazard_flags": [
-        "battery",
-        "lead-battery"
-      ],
-      "remarks": "quantity not stated; burned",
-      "page": 19,
-      "row_index": 1,
-      "source_text": "Emergency Diesel Generator battery --- burned"
     }
   ]
 }

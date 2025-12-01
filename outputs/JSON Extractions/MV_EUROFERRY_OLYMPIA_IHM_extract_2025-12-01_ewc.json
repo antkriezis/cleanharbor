@@ -1,0 +1,1410 @@
+{
+  "document_meta": {
+    "title": "Inventory Hazardous Material (IHM)",
+    "pages_total": 19
+  },
+  "rows": [
+    {
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
+      "item_name": "Batteries (COMMON USE)",
+      "location": "Battery Room, 5th Deck",
+      "quantity_value": 8,
+      "quantity_unit": "pcs",
+      "hazard_flags": [
+        "lead-battery"
+      ],
+      "remarks": "",
+      "page": 11,
+      "row_index": 76,
+      "source_text": "COMMON USE Battery Battery Room 5th Deck – Lead 8 Batteries",
+      "ewc_code": "160601",
+      "ewc_candidates": [
+        "200133",
+        "160605"
+      ]
+    },
+    {
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
+      "item_name": "GMDSS Batteries",
+      "location": "Navigation Room, 9th Deck",
+      "quantity_value": 2,
+      "quantity_unit": "pcs",
+      "hazard_flags": [
+        "lead-battery"
+      ],
+      "remarks": "",
+      "page": 11,
+      "row_index": 77,
+      "source_text": "GMDSS Batteries 9th Deck - Navigation Room Lead 2 Batteries",
+      "ewc_code": "160601",
+      "ewc_candidates": [
+        "200133",
+        "160605"
+      ]
+    },
+    {
+      "chapter": "Part I",
+      "section_title": "5.5 STRUCTURE AND HULL CONTAINING MATERIALS LISTED IN TABLE A AND TABLE B OF APPENDIX 1 OF THE GUIDELINES",
+      "material": "Lead batteries",
+      "item_name": "Emergency Generator Room Batteries",
+      "location": "Emergency Generator Room, Platform 3/4",
+      "quantity_value": 2,
+      "quantity_unit": "pcs",
+      "hazard_flags": [
+        "lead-battery"
+      ],
+      "remarks": "",
+      "page": 11,
+      "row_index": 78,
+      "source_text": "Emergency Generator Room Platform 3/4 ... Lead 2 Batteries",
+      "ewc_code": "160601",
+      "ewc_candidates": [
+        "200133",
+        "160605"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 8 STB",
+      "quantity_value": 2.7,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 1,
+      "source_text": "WT 8 STB Very Low Sulphur Fuel Oil 2,7 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 8 PORT",
+      "quantity_value": 3.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 2,
+      "source_text": "WT 8 PORT Very Low Sulphur Fuel Oil 3,3 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 9 STB",
+      "quantity_value": 4.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 3,
+      "source_text": "WT 9 STB Very Low Sulphur Fuel Oil 4,3 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 9 PORT",
+      "quantity_value": 4.0,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 4,
+      "source_text": "WT 9 PORT Very Low Sulphur Fuel Oil 4,0 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 10 STB",
+      "quantity_value": 2.9,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 5,
+      "source_text": "WT 10 STB Very Low Sulphur Fuel Oil 2,9 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 10 PORT",
+      "quantity_value": 6.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 6,
+      "source_text": "WT 10 PORT Very Low Sulphur Fuel Oil 6,5 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 11 STB",
+      "quantity_value": 3.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 7,
+      "source_text": "WT 11 STB Very Low Sulphur Fuel Oil 3,3 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "",
+      "location": "WT 11 PORT",
+      "quantity_value": 5.7,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 8,
+      "source_text": "WT 11 PORT Very Low Sulphur Fuel Oil 5,7 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "Service Tank MMPP",
+      "location": "T 12 STB",
+      "quantity_value": 1.7,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE (Service Tank MMPP)",
+      "page": 13,
+      "row_index": 9,
+      "source_text": "T 12 STB Very Low Sulphur Fuel Oil 1,7 UNPUMPABLE Service Tank MMPP",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "Settling Tank MMPP",
+      "location": "T 13 STB",
+      "quantity_value": 3.0,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE (Settling Tank MMPP)",
+      "page": 13,
+      "row_index": 10,
+      "source_text": "T 13 STB Very Low Sulphur Fuel Oil 3,0 UNPUMPABLE Settling Tank MMPP",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "Settling Tank MMPP",
+      "location": "T 13 PORT",
+      "quantity_value": 3.0,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE (Settling Tank MMPP)",
+      "page": 13,
+      "row_index": 11,
+      "source_text": "T 13 PORT Very Low Sulphur Fuel Oil 3,0 UNPUMPABLE Settling Tank MMPP",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "Service Tank MMPP (Overflow)",
+      "location": "T 35 STB",
+      "quantity_value": 0.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE (Overflow)",
+      "page": 13,
+      "row_index": 12,
+      "source_text": "T 35 STB Very Low Sulphur Fuel Oil 0,5 UNPUMPABLE Overflow",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Very Low Sulphur Fuel Oil",
+      "item_name": "Service Tk",
+      "location": "T 14 A",
+      "quantity_value": 4.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 13,
+      "row_index": 12,
+      "source_text": "T 14 A Very Low Sulphur Fuel Oil 4,1 UNPUMPABLE Service Tk",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Marine Gasoil Sulphur 0,01%",
+      "item_name": "",
+      "location": "T 12 PORT",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 13,
+      "source_text": "T 12 PORT Marine Gasoil Sulphur 0,01% 0,1",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Marine Gasoil Sulphur 0,01%",
+      "item_name": "",
+      "location": "T 21",
+      "quantity_value": 1.0,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 14,
+      "source_text": "T 21 Marine Gasoil Sulphur 0,01% 1,0",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Marine Gasoil Sulphur 0,01%",
+      "item_name": "",
+      "location": "T 22",
+      "quantity_value": 1.2,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 15,
+      "source_text": "T 22 Marine Gasoil Sulphur 0,01% 1,2",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Marine Gasoil Sulphur 0,01%",
+      "item_name": "Service Tank DGE",
+      "location": "T 38",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "Service Tank DGE",
+      "page": 13,
+      "row_index": 17,
+      "source_text": "T 38 Marine Gasoil Sulphur 0,01% 0,1 Service Tank DGE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 15 PORT",
+      "quantity_value": 0.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 18,
+      "source_text": "T 15 PORT Lube oil 0,3",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 15 STB",
+      "quantity_value": 0.9,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 19,
+      "source_text": "T 15 STB Lube oil 0,9",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 32",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 20,
+      "source_text": "T 32 Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 33",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 21,
+      "source_text": "T 33 Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 34",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 22,
+      "source_text": "T 34 Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 37 PORT",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 23,
+      "source_text": "T 37 PORT Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 37 STB",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 24,
+      "source_text": "T 37 STB Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Lube oil",
+      "item_name": "",
+      "location": "T 40",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 13,
+      "row_index": 25,
+      "source_text": "T 40 Lube oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "ME Lube Oil Drain",
+      "item_name": "",
+      "location": "T 16 A PORT",
+      "quantity_value": 2.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 30,
+      "source_text": "T 16 A PORT ME Lube Oil Drain 2,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "ME Lube Oil Drain",
+      "item_name": "",
+      "location": "T 16 A STB",
+      "quantity_value": 2.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 31,
+      "source_text": "T 16 A STB ME Lube Oil Drain 2,5",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "ME Lube Oil Drain",
+      "item_name": "",
+      "location": "T 16 B PORT",
+      "quantity_value": 2.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 32,
+      "source_text": "T 16 B PORT ME Lube Oil Drain 2,5",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "ME Lube Oil Drain",
+      "item_name": "",
+      "location": "T 16 B STB",
+      "quantity_value": 2.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 33,
+      "source_text": "T 16 B STB ME Lube Oil Drain 2,5",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Leakage Oil",
+      "item_name": "",
+      "location": "T 17",
+      "quantity_value": 0.7,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 34,
+      "source_text": "T 17 Leakage Oil 0,7",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "160708",
+        "130205"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Waste Oil",
+      "item_name": "",
+      "location": "T 19",
+      "quantity_value": 0.4,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 36,
+      "source_text": "T 19 Waste Oil 0,4",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Bilge Water",
+      "item_name": "",
+      "location": "T 20 STB",
+      "quantity_value": 3.0,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 37,
+      "source_text": "T 20 STB Bilge Water 3,0",
+      "ewc_code": "130507",
+      "ewc_candidates": [
+        "130403",
+        "161001"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "LO Sep. Sludge",
+      "item_name": "",
+      "location": "T 28 PORT",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "sludge",
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 38,
+      "source_text": "T 28 PORT LO Sep.Sludge 0,1",
+      "ewc_code": "130502",
+      "ewc_candidates": [
+        "130503",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "LO Sep. Sludge",
+      "item_name": "",
+      "location": "T 28 STB",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "sludge",
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 39,
+      "source_text": "T 28 STB LO Sep.Sludge 0,1",
+      "ewc_code": "130502",
+      "ewc_candidates": [
+        "130503",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "VLSFO Sep. Sludge",
+      "item_name": "",
+      "location": "T 29",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "sludge",
+        "oil"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 40,
+      "source_text": "T 29 VLSFO Sep.Sludge 0,1",
+      "ewc_code": "130502",
+      "ewc_candidates": [
+        "130503",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Sludge",
+      "item_name": "",
+      "location": "T 30",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "sludge"
+      ],
+      "remarks": "",
+      "page": 14,
+      "row_index": 41,
+      "source_text": "T 30 Sludge 0,1",
+      "ewc_code": "130502",
+      "ewc_candidates": [
+        "130503",
+        "160708"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
+      "location": "2° COPERTINO (DG2)",
+      "quantity_value": 0.2,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 15,
+      "row_index": 73,
+      "source_text": "2° COPERTINO (DG2) Bilge well 0,2",
+      "ewc_code": "130507",
+      "ewc_candidates": [
+        "130403",
+        "161001"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
+      "location": "2° COPERTINO (DG1)",
+      "quantity_value": 0.2,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 15,
+      "row_index": 74,
+      "source_text": "2° COPERTINO (DG1) Bilge well 0,2",
+      "ewc_code": "130507",
+      "ewc_candidates": [
+        "130403",
+        "161001"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Bilge water",
+      "item_name": "Bilge",
+      "location": "1° COPERTINO (MMEE)",
+      "quantity_value": 1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 15,
+      "row_index": 75,
+      "source_text": "1° COPERTINO (MMEE) Bilge 1",
+      "ewc_code": "130507",
+      "ewc_candidates": [
+        "130403",
+        "161001"
+      ]
+    },
+    {
+      "chapter": "Part II",
+      "section_title": "PART II – OPERATIONALLY GENERATED WASTE",
+      "material": "Bilge water",
+      "item_name": "Bilge well",
+      "location": "2° Deck Bunker station STB",
+      "quantity_value": 0.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 15,
+      "row_index": 76,
+      "source_text": "2° Deck Bunker station STB Bilge well 0,3",
+      "ewc_code": "130507",
+      "ewc_candidates": [
+        "130403",
+        "161001"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Battery",
+      "item_name": "Battery",
+      "location": "Em. diesel generator room",
+      "quantity_value": 2,
+      "quantity_unit": "pcs",
+      "hazard_flags": [
+        "lead-battery"
+      ],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 3,
+      "source_text": "Em. diesel generator room Battery 2 pieces burned",
+      "ewc_code": "160601",
+      "ewc_candidates": [
+        "200133",
+        "160605"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Battery",
+      "item_name": "UPS batteries",
+      "location": "Bridge-wheelhouse",
+      "quantity_value": 42,
+      "quantity_unit": "pcs",
+      "hazard_flags": [
+        "lead-battery"
+      ],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 4,
+      "source_text": "Bridge-wheelhouse Battery ups 42 pieces burned",
+      "ewc_code": "160601",
+      "ewc_candidates": [
+        "200133",
+        "160605"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Paint and paint related products (Catalyzers)",
+      "item_name": "Paint products",
+      "location": "Paint store",
+      "quantity_value": 400,
+      "quantity_unit": "L",
+      "hazard_flags": [],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 11,
+      "source_text": "Paint and paint related products (Catalyzers) 400 LT burned Paint store",
+      "ewc_code": "080111",
+      "ewc_candidates": [
+        "080501",
+        "080112"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Paint and paint related products (Catalyzers)",
+      "item_name": "Paint products",
+      "location": "Paint store",
+      "quantity_value": 3000,
+      "quantity_unit": "L",
+      "hazard_flags": [],
+      "remarks": "burned",
+      "page": 16,
+      "row_index": 11,
+      "source_text": "Paint and paint related products (Catalyzers) 3000 LT burned Paint store",
+      "ewc_code": "080111",
+      "ewc_candidates": [
+        "080501",
+        "080112"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Fuel residues",
+      "item_name": "Fuel tanks",
+      "location": "Fuel tanks",
+      "quantity_value": 44.9,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 17,
+      "row_index": 17,
+      "source_text": "Fuel tanks Residues 44,9 m3 UNPUMPABLE",
+      "ewc_code": "130701",
+      "ewc_candidates": [
+        "130703",
+        "130899"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Lube oil residues",
+      "item_name": "Lube oil tanks",
+      "location": "Lube oil tanks",
+      "quantity_value": 2.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 17,
+      "row_index": 18,
+      "source_text": "Lube oil tanks Residues 2,1 m3 UNPUMPABLE",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Sludge/sewage residues",
+      "item_name": "Sludge/sewage tanks",
+      "location": "Sludge/sewage tanks",
+      "quantity_value": 8.5,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "sludge"
+      ],
+      "remarks": "UNPUMPABLE",
+      "page": 17,
+      "row_index": 19,
+      "source_text": "Sludge/sewage tanks Residues 8,5 m3 UNPUMPABLE",
+      "ewc_code": "200304",
+      "ewc_candidates": [
+        "200306",
+        "190805"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "Chemical and chemical related products",
+      "item_name": "Chemicals",
+      "location": "Chemical store",
+      "quantity_value": 1850,
+      "quantity_unit": "L",
+      "hazard_flags": [],
+      "remarks": "",
+      "page": 17,
+      "row_index": 23,
+      "source_text": "Chemical and chemical related products Chemical store 1850 LT",
+      "ewc_code": "160509",
+      "ewc_candidates": [
+        "160508",
+        "160507"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-1 - STORES",
+      "material": "HFC gas R448",
+      "item_name": "",
+      "location": "Deck 3",
+      "quantity_value": 459,
+      "quantity_unit": "kg",
+      "hazard_flags": [
+        "HFC"
+      ],
+      "remarks": "",
+      "page": 17,
+      "row_index": 24,
+      "source_text": "Deck 3 HFC gas R448 459 KG",
+      "ewc_code": "140601",
+      "ewc_candidates": [
+        "160504",
+        "160505"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Diesel generators",
+      "location": "Engine room",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 1,
+      "source_text": "Diesel generators Engine room 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Alternator bearings",
+      "location": "Engine room",
+      "quantity_value": 0.04,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 2,
+      "source_text": "Alternator bearings Engine room 0,04",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Anchor winches",
+      "location": "Forecastle room",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 3,
+      "source_text": "Anchor winches Forecastle room 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Lifeboat winches",
+      "location": "Deck 5",
+      "quantity_value": 0.05,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 4,
+      "source_text": "Lifeboat winches Deck 5 0,05",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Main engines",
+      "location": "Engine room",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 5,
+      "source_text": "Main engines Engine room 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Engine / Pump reduction gearbox",
+      "location": "Storage room",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 6,
+      "source_text": "Engine / Pump reduction gearbox Storage room 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Rec. gearbox",
+      "location": "Engine room",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 7,
+      "source_text": "Rec. gearbox Engine room 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Compressors",
+      "location": "Storage oil",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 8,
+      "source_text": "Compressors Storage oil 0,1",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Rescue boats engines",
+      "location": "Storage oil",
+      "quantity_value": 0.01,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 9,
+      "source_text": "Rescue boats engines Storage oil 0,01",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Steering gears",
+      "location": "Steering room",
+      "quantity_value": 0.6,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 10,
+      "source_text": "Steering gears Steering room 0,6",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130113",
+        "130205"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Lubricating Oil",
+      "item_name": "Bow thrusters (1 – 2)",
+      "location": "Bow thruster room",
+      "quantity_value": 0.3,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 11,
+      "source_text": "Bow thrusters (1 – 2) Bow thruster room 0,3",
+      "ewc_code": "130208",
+      "ewc_candidates": [
+        "130205",
+        "130206"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Hydraulic oil",
+      "item_name": "Hydraulic system",
+      "location": "Plt 2/3 Aft stb",
+      "quantity_value": 0.1,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 12,
+      "source_text": "Hydraulic system Plt 2/3 Aft stb 0,1",
+      "ewc_code": "130113",
+      "ewc_candidates": [
+        "130110",
+        "130111",
+        "130112"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-2 - LIQUIDS SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "Hydraulic oil",
+      "item_name": "Stern Thruster (3 – 4)",
+      "location": "Steering gear room",
+      "quantity_value": 0.4,
+      "quantity_unit": "m3",
+      "hazard_flags": [
+        "oil"
+      ],
+      "remarks": "",
+      "page": 18,
+      "row_index": 13,
+      "source_text": "Stern Thruster (3 – 4) Steering gear room 0,4",
+      "ewc_code": "130113",
+      "ewc_candidates": [
+        "130110",
+        "130111",
+        "130112"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-3 – GASES SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "HFC (R448)",
+      "item_name": "ECR A/C system DG 1 room",
+      "location": "ECR A/C system DG 1 room",
+      "quantity_value": 5,
+      "quantity_unit": "kg",
+      "hazard_flags": [
+        "HFC"
+      ],
+      "remarks": "",
+      "page": 19,
+      "row_index": 3,
+      "source_text": "HFC (R448) ECR A/C system DG 1 room 5 KG",
+      "ewc_code": "140601",
+      "ewc_candidates": [
+        "160504",
+        "160505"
+      ]
+    },
+    {
+      "chapter": "Part III",
+      "section_title": "III-3 – GASES SEALED IN SHIP’S MACHINERY AND EQUIPMENT",
+      "material": "HFC (R448)",
+      "item_name": "ECR A/C system DG 2 room",
+      "location": "ECR A/C system DG 2 room",
+      "quantity_value": 5,
+      "quantity_unit": "kg",
+      "hazard_flags": [
+        "HFC"
+      ],
+      "remarks": "",
+      "page": 19,
+      "row_index": 4,
+      "source_text": "HFC (R448) ECR A/C system DG 2 room 5 KG",
+      "ewc_code": "140601",
+      "ewc_candidates": [
+        "160504",
+        "160505"
+      ]
+    }
+  ]
+}
