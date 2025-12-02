@@ -2,5 +2,3 @@ openai>=1.51.0
 python-dotenv>=1.0.1
 pdfplumber>=0.11.0
 supabase>=2.0.0
-# Note: No additional packages needed for Vercel Python runtime
-# The BaseHTTPRequestHandler is part of Python's standard library
