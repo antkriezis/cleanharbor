@@ -2,7 +2,7 @@
   "$schema": "https://openapi.vercel.sh/vercel.json",
   "version": 2,
   "functions": {
-    "api/upload/background.py": {
+    "api/upload.py": {
       "runtime": "python3.11",
       "memory": 3008,
       "maxDuration": 800
@@ -11,7 +11,7 @@
   "routes": [
     {
       "src": "/api/upload",
-      "dest": "/api/upload/background"
+      "dest": "/api/upload.py"
     }
   ]
 }
