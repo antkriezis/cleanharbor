@@ -6,11 +6,14 @@ Extract hazardous-material rows from an IHM PDF:
 3) Return a single JSON matching the schema
 
 Can be run standalone or imported by main.py
+Supports both file paths and in-memory bytes for serverless deployment.
 """
 
+import io
 import json
 import os
 from pathlib import Path
+from typing import Union
 
 import pdfplumber
 from openai import OpenAI
@@ -89,13 +92,23 @@ TIGHT_RULES = """
 # ----------------------------
 # PDF text extraction (entire doc)
 # ----------------------------
-def extract_full_pdf_text(pdf_path: Path) -> tuple[str, int]:
+def extract_full_pdf_text(pdf_source: Union[Path, bytes]) -> tuple[str, int]:
     """
     Return (whole_text, total_pages) with page markers.
+    
+    Args:
+        pdf_source: Either a Path to a PDF file, or raw PDF bytes
     """
     pages_total = 0
     buf = []
-    with pdfplumber.open(str(pdf_path)) as pdf:
+    
+    # Handle both file path and bytes input
+    if isinstance(pdf_source, bytes):
+        pdf_file = io.BytesIO(pdf_source)
+    else:
+        pdf_file = str(pdf_source)
+    
+    with pdfplumber.open(pdf_file) as pdf:
         pages_total = len(pdf.pages)
         for i, page in enumerate(pdf.pages, start=1):
             txt = (page.extract_text() or "").strip()
@@ -173,8 +186,49 @@ def _call_chunked(client: OpenAI, model: str, full_text: str, schema_str: str, m
     return {"document_meta": {}, "rows": all_rows}
 
 # ----------------------------
-# Main extraction function
+# Main extraction functions
 # ----------------------------
+def extract_from_bytes(pdf_bytes: bytes, model: str = "gpt-5") -> dict:
+    """
+    Extract hazmat data from PDF bytes (for serverless deployment).
+    
+    Args:
+        pdf_bytes: Raw PDF file content as bytes
+        model: OpenAI model to use
+        
+    Returns:
+        The extracted data dictionary with document_meta and rows
+        
+    Raises:
+        ValueError: If OPENAI_API_KEY is not set
+    """
+    if not os.getenv("OPENAI_API_KEY"):
+        raise ValueError("OPENAI_API_KEY environment variable is not set.")
+
+    client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    
+    full_text, pages_total = extract_full_pdf_text(pdf_bytes)
+    schema_str = json.dumps(EXTRACTION_SCHEMA)
+
+    # Try a single call first
+    try:
+        data = _call_single(client, model, full_text, schema_str)
+    except Exception as e:
+        # If context too large / any failure, fallback to chunked
+        data = _call_chunked(client, model, full_text, schema_str, max_chars=12000)
+
+    # Build consistent final JSON
+    result = {
+        "document_meta": {
+            "title": "Inventory Hazardous Material (IHM)",
+            "pages_total": pages_total,
+        },
+        "rows": data.get("rows", []),
+    }
+
+    return result
+
+
 def extract(pdf_path: Path, out_path: Path, model: str = "gpt-5") -> dict:
     """
     Extract hazmat data from an IHM PDF and save to JSON.
@@ -203,7 +257,7 @@ def extract(pdf_path: Path, out_path: Path, model: str = "gpt-5") -> dict:
         data = _call_single(client, model, full_text, schema_str)
     except Exception as e:
         # If context too large / any failure, fallback to chunked
-        print(f"   ℹ️  Falling back to chunked mode: {e}")
+        print(f"Falling back to chunked mode: {e}")
         data = _call_chunked(client, model, full_text, schema_str, max_chars=12000)
 
     # Build consistent final JSON

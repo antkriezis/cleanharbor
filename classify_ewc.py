@@ -6,11 +6,13 @@ Classifies extracted hazardous materials into European Waste Catalogue (EWC) cod
 using GPT-5 and the official EWC classification rules.
 
 Can be run standalone or imported by main.py
+Supports both file-based and in-memory classification for serverless deployment.
 """
 
 import json
 import os
 from pathlib import Path
+from typing import Optional
 
 from openai import OpenAI
 from supabase import create_client, Client
@@ -237,6 +239,60 @@ def classify_batch(
         })
     
     return cleaned_results
+
+
+def classify_materials(data: dict, model: str = "gpt-5") -> dict:
+    """
+    Classify all items in extracted hazmat data with EWC codes (for serverless deployment).
+    
+    Args:
+        data: Dictionary containing 'rows' and optionally 'document_meta'
+        model: OpenAI model to use for classification
+        
+    Returns:
+        The same dictionary with ewc_code and ewc_candidates added to each row
+        
+    Raises:
+        ValueError: If required environment variables are not set
+    """
+    # Validate environment
+    if not os.getenv("OPENAI_API_KEY"):
+        raise ValueError("OPENAI_API_KEY environment variable is not set.")
+    if not os.getenv("SUPABASE_URL") or not os.getenv("SUPABASE_SERVICE_ROLE_KEY"):
+        raise ValueError("SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY must be set.")
+    
+    # Initialize clients
+    openai_client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+    supabase: Client = create_client(
+        os.getenv("SUPABASE_URL"),
+        os.getenv("SUPABASE_SERVICE_ROLE_KEY")
+    )
+    
+    rows = data.get("rows", [])
+    if not rows:
+        return data
+    
+    # Fetch EWC codes from Supabase
+    ewc_codes = fetch_ewc_codes(supabase)
+    
+    # Format codes for prompt
+    ewc_codes_text = format_ewc_codes_for_prompt(ewc_codes)
+    
+    # Classify all rows in a single batch call
+    classifications = classify_batch(
+        openai_client,
+        model,
+        rows,
+        ewc_codes_text,
+        ewc_codes
+    )
+    
+    # Apply classifications to rows
+    for row, classification in zip(rows, classifications):
+        row["ewc_code"] = classification["ewc_code"]
+        row["ewc_candidates"] = classification["ewc_candidates"]
+    
+    return data
 
 
 def classify_json_file(json_path: Path, model: str = "gpt-5") -> Path:
