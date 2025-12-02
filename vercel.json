@@ -5,13 +5,13 @@
     "api/upload/background.py": {
       "runtime": "python3.11",
       "memory": 3008,
-      "maxDuration": 1800
+      "maxDuration": 900
     }
   },
   "routes": [
     {
       "src": "/api/upload",
-      "dest": "/api/upload/background.py"
+      "dest": "/api/upload/background"
     }
   ]
 }
