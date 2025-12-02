@@ -3,7 +3,6 @@
   "version": 2,
   "functions": {
     "api/upload.py": {
-      "runtime": "python3.11",
       "memory": 3008,
       "maxDuration": 800
     }
