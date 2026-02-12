@@ -83,6 +83,7 @@ def estimate_weight_stub(ewc_code: str, row_context: dict) -> float:
     return round(weight, 3)
 
 
+import json
 import re
 
 # Debug log storage (populated during debug mode)
@@ -105,160 +106,136 @@ def clear_debug_logs():
     """Clear debug logs."""
     _debug_logs.clear()
 
-def parse_weight_from_response(response_text: str) -> tuple[float, str]:
-    """
-    Robustly parse weight from LLM response.
-    
-    Returns:
-        Tuple of (weight, error_message). If successful, error_message is None.
-    """
-    if not response_text:
-        return None, "Empty response from LLM"
-    
-    text = response_text.strip()
-    
-    # Try direct float conversion first
-    try:
-        weight = float(text)
-        return round(weight, 3), None
-    except ValueError:
-        pass
-    
-    # Try to extract first number from text using regex
-    # Matches: 0.5, .5, 12.345, 100, etc.
-    match = re.search(r'[\d]*\.?\d+', text)
-    if match:
-        try:
-            weight = float(match.group())
-            return round(weight, 3), None
-        except ValueError:
-            pass
-    
-    return None, f"Could not parse float from: '{text[:100]}'"
 
-
-def estimate_weight_llm(ewc_code: str, row_context: dict, client: OpenAI, model: str = "gpt-5", debug: bool = False) -> tuple[float, str]:
+def estimate_weights_batch(
+    rows: list[dict],
+    ewc_column: str,
+    client: OpenAI,
+    model: str = "gpt-5",
+    debug: bool = False
+) -> list[dict]:
     """
-    Estimate weight in tonnes using LLM API call.
-    
-    Uses temperature=0 for deterministic results.
+    Estimate weights for ALL rows in a SINGLE batch API call.
     
     Args:
-        ewc_code: The EWC code (e.g., "17 01 01")
-        row_context: Additional context from the row
+        rows: List of row dictionaries
+        ewc_column: Name of the EWC code column
         client: OpenAI client instance
         model: Model to use for estimation
         debug: If True, log detailed debug info
         
     Returns:
-        Tuple of (weight, error_message). If successful, error_message is None.
-        Returns (None, error) if estimation failed.
+        List of dicts with {item_index, weight_tonnes} for each row
+        
+    Raises:
+        ValueError: If API call fails
     """
-    if not ewc_code or ewc_code in ('', 'N/A', 'Unknown', None):
-        return 0.0, "Empty or invalid EWC code"
+    # Build items list for prompt
+    items_list_lines = []
+    for i, row in enumerate(rows):
+        ewc_code = row.get(ewc_column, '')
+        material = row.get('material') or row.get('Material') or row.get('item_name') or ''
+        qty = row.get('quantity_value') or row.get('Qty') or ''
+        unit = row.get('quantity_unit') or row.get('Unit') or ''
+        location = row.get('location') or row.get('Location') or ''
+        
+        items_list_lines.append(
+            f"Item {i}: EWC={ewc_code}, Material={material}, Qty={qty} {unit}, Location={location}"
+        )
     
-    # Build context string - check multiple column name variants
-    material = (
-        row_context.get('material') or 
-        row_context.get('Material') or 
-        row_context.get('item_name') or
-        row_context.get('Item Name') or 
-        ''
-    )
-    qty = (
-        row_context.get('quantity_value') or 
-        row_context.get('Qty') or 
-        row_context.get('qty') or 
-        ''
-    )
-    unit = (
-        row_context.get('quantity_unit') or 
-        row_context.get('Unit') or 
-        row_context.get('unit') or 
-        ''
-    )
-    location = (
-        row_context.get('location') or 
-        row_context.get('Location') or 
-        ''
-    )
-    
-    # Log inputs if debug mode
-    if debug:
-        _log_debug("LLM Input", {
-            'ewc_code': ewc_code,
-            'material': material,
-            'qty': qty,
-            'unit': unit,
-            'location': location,
-            'raw_row_keys': list(row_context.keys())
-        })
-    
-    # Check for missing critical inputs
-    input_warnings = []
-    if not material:
-        input_warnings.append("material is empty")
-    if not qty:
-        input_warnings.append("quantity is empty")
-    if not unit:
-        input_warnings.append("unit is empty")
+    items_list = "\n".join(items_list_lines)
     
     prompt = f"""You are a waste weight estimation expert for maritime/ship recycling.
 
-Estimate the weight in TONNES (metric tons) for the following waste item.
-Return ONLY a single decimal number (e.g., 0.250 or 12.500). No text, no units, no explanation - just the number.
+Estimate the weight in TONNES (metric tons) for each of the following waste items.
 
-EWC Code: {ewc_code}
-Material: {material if material else '(not specified)'}
-Quantity: {qty if qty else '(not specified)'} {unit if unit else ''}
-Location: {location if location else '(not specified)'}
+## Items to estimate:
+{items_list}
 
-Rules:
-- If quantity is given in pieces (pcs), estimate typical weight per piece for this material type.
-- If quantity is in liters (L), use appropriate density for the material.
-- If quantity is in cubic meters (m3), use appropriate density.
-- If quantity is in kg, convert to tonnes (divide by 1000).
-- If no quantity is given, estimate a typical amount for this waste type on a ship.
-- Always return a positive number. If truly zero, return 0.001.
+## Rules:
+- If quantity is in pieces (pcs), estimate typical weight per piece for this material type
+- If quantity is in liters (L) or cubic meters (m3), use appropriate density
+- If quantity is in kg, convert to tonnes (divide by 1000)
+- If no quantity is given, estimate a typical small amount (0.01-0.1 tonnes)
+- Use the EWC code to understand the waste type
+- Return positive numbers only. Minimum 0.001 tonnes.
 
-Return ONLY a decimal number (e.g., 2.500):"""
+## Response format:
+Return ONLY a JSON object with this exact structure:
+{{
+  "weights": [
+    {{"item_index": 0, "weight_tonnes": 1.234}},
+    {{"item_index": 1, "weight_tonnes": 0.567}},
+    ...
+  ]
+}}
 
+You MUST return exactly {len(rows)} weight entries, one for each item listed above.
+Return ONLY valid JSON, no other text."""
+
+    if debug:
+        _log_debug("Batch prompt", {'num_items': len(rows), 'prompt_length': len(prompt)})
+    
     try:
+        print(f"[WEIGHT] Calling LLM for batch estimation of {len(rows)} items...")
         response = client.chat.completions.create(
             model=model,
-            # Note: temperature removed as gpt-5 only supports default (1)
             messages=[
-                {"role": "system", "content": "You are a precise waste weight estimator. You must respond with ONLY a single decimal number representing tonnes. No text, no units, no explanation."},
+                {"role": "system", "content": "You are a precise waste weight estimator. Return ONLY valid JSON."},
                 {"role": "user", "content": prompt}
-            ]
+            ],
+            response_format={"type": "json_object"},
         )
         
         raw_response = response.choices[0].message.content
+        print(f"[WEIGHT] LLM response received, parsing...")
         
         if debug:
-            _log_debug("LLM Response", {
-                'raw': raw_response,
-                'model': model
+            _log_debug("Batch response", {'raw': raw_response[:500]})
+        
+        # Parse JSON response
+        result = json.loads(raw_response)
+        weights = result.get("weights", [])
+        
+        if len(weights) != len(rows):
+            print(f"[WEIGHT_WARN] Expected {len(rows)} weights, got {len(weights)}")
+        
+        # Build results with validation
+        weight_results = []
+        for i in range(len(rows)):
+            # Find weight for this index
+            weight_entry = next(
+                (w for w in weights if w.get("item_index") == i),
+                None
+            )
+            
+            if weight_entry:
+                weight = weight_entry.get("weight_tonnes", 0.0)
+                try:
+                    weight = round(float(weight), 3)
+                except (ValueError, TypeError):
+                    weight = 0.001
+            else:
+                # Missing entry - use minimal default
+                weight = 0.001
+                print(f"[WEIGHT_WARN] Missing weight for item {i}, using 0.001")
+            
+            weight_results.append({
+                "item_index": i,
+                "weight_tonnes": weight
             })
         
-        # Parse the response
-        weight, parse_error = parse_weight_from_response(raw_response)
+        print(f"[WEIGHT] Successfully parsed {len(weight_results)} weights")
+        return weight_results
         
-        if parse_error:
-            if debug:
-                _log_debug("Parse Error", {'error': parse_error, 'raw': raw_response})
-            return None, f"Parse failed: {parse_error}"
-        
-        if debug:
-            _log_debug("Parsed Weight", {'weight': weight, 'input_warnings': input_warnings})
-        
-        return weight, None
-    
+    except json.JSONDecodeError as e:
+        error_msg = f"Failed to parse LLM JSON response: {str(e)}"
+        print(f"[WEIGHT_ERROR] {error_msg}")
+        raise ValueError(error_msg)
     except Exception as e:
-        error_msg = f"LLM API call failed: {type(e).__name__}: {str(e)}"
-        if debug:
-            _log_debug("LLM Error", {'error': error_msg})
-        return None, error_msg
+        error_msg = f"LLM batch API call failed: {type(e).__name__}: {str(e)}"
+        print(f"[WEIGHT_ERROR] {error_msg}")
+        raise ValueError(error_msg)
 
 
 # ----------------------------
@@ -364,13 +341,11 @@ def estimate_weights_from_rows(
     
     # Validate LLM setup
     if use_llm and not openai_client:
-        error_msg = "use_llm=True but openai_client is None! Falling back to stub."
+        error_msg = "use_llm=True but openai_client is None! Cannot proceed."
         print(f"[WEIGHT_ERROR] {error_msg}")
-        if debug:
-            _log_debug("LLM Setup Error", {'error': error_msg})
-        use_llm = False  # Force fallback
+        raise ValueError(error_msg)
     
-    # Process each row
+    # Limit rows in debug mode
     total_rows = len(rows)
     if debug and max_debug_rows:
         total_rows = min(total_rows, max_debug_rows)
@@ -380,61 +355,82 @@ def estimate_weights_from_rows(
     processed_rows = []
     errors = []
     
-    for idx, row in enumerate(rows):
-        ewc_code = row.get(ewc_column, '')
+    # Report progress: starting
+    if progress_callback:
+        progress_callback(10)
+    
+    if use_llm and openai_client:
+        # ================================================================
+        # BATCH LLM ESTIMATION - Single API call for ALL rows
+        # ================================================================
+        print(f"[WEIGHT] Using batch LLM estimation for {len(rows)} rows...")
         
-        # Pass the entire row as context (let the estimation function pick what it needs)
-        row_context = dict(row)
+        # Call LLM once for all rows
+        weight_results = estimate_weights_batch(
+            rows=rows,
+            ewc_column=ewc_column,
+            client=openai_client,
+            model=model,
+            debug=debug
+        )
         
-        # Log first few rows in debug mode
-        if debug and idx < 5:
-            _log_debug(f"Processing row {idx+1}", {
-                'ewc_code': ewc_code,
-                'row_keys': list(row.keys()),
-                'material': row.get('material') or row.get('Material'),
-                'quantity_value': row.get('quantity_value') or row.get('Qty'),
-                'quantity_unit': row.get('quantity_unit') or row.get('Unit'),
-            })
+        # Report progress: LLM complete
+        if progress_callback:
+            progress_callback(80)
         
-        # Estimate weight
-        weight = None
-        error_msg = None
-        
-        if not ewc_code or ewc_code in ('', 'N/A', 'Unknown'):
-            weight = 0.0
-            error_msg = f'Missing or invalid EWC code: "{ewc_code}"'
-            errors.append({
-                'row': idx + 1,
-                'error': error_msg,
-                'ewc_code': ewc_code
-            })
-        elif use_llm and openai_client:
-            # Use LLM estimation - NO FALLBACK TO STUB
-            weight, error_msg = estimate_weight_llm(
-                ewc_code, row_context, openai_client, model, 
-                debug=(debug and idx < 5)  # Only debug first 5
+        # Apply weights to rows
+        for idx, row in enumerate(rows):
+            ewc_code = row.get(ewc_column, '')
+            
+            # Check for invalid EWC code
+            if not ewc_code or ewc_code in ('', 'N/A', 'Unknown'):
+                errors.append({
+                    'row': idx + 1,
+                    'error': f'Missing or invalid EWC code: "{ewc_code}"',
+                    'ewc_code': ewc_code
+                })
+            
+            # Get weight from batch results
+            weight_entry = next(
+                (w for w in weight_results if w.get("item_index") == idx),
+                {"weight_tonnes": 0.001}
             )
-            if error_msg:
-                # LLM failed - FAIL THE JOB, don't use misleading stub values
-                print(f"[WEIGHT_ERROR] Row {idx+1}: LLM failed ({error_msg})")
-                raise ValueError(f"Weight estimation failed for row {idx+1} (EWC: {ewc_code}): {error_msg}")
-        else:
-            # Only use stub if explicitly not using LLM
-            weight = estimate_weight_stub(ewc_code, row_context)
+            weight = weight_entry.get("weight_tonnes", 0.001)
+            
+            # Add weight to row
+            new_row = dict(row)
+            new_row['estimated_weight_tonnes'] = weight
+            processed_rows.append(new_row)
+    else:
+        # ================================================================
+        # STUB ESTIMATION - Per-row (only if LLM disabled)
+        # ================================================================
+        print(f"[WEIGHT] Using stub estimation for {len(rows)} rows...")
         
-        # Ensure weight is a number (never None in output)
-        if weight is None:
-            raise ValueError(f"Weight estimation returned None for row {idx+1} (EWC: {ewc_code})")
-        
-        # Add weight to row
-        new_row = dict(row)
-        new_row['estimated_weight_tonnes'] = weight
-        processed_rows.append(new_row)
-        
-        # Report progress
-        if progress_callback and idx % 10 == 0:
-            progress = int((idx / total_rows) * 100)
-            progress_callback(progress)
+        for idx, row in enumerate(rows):
+            ewc_code = row.get(ewc_column, '')
+            
+            if not ewc_code or ewc_code in ('', 'N/A', 'Unknown'):
+                weight = 0.0
+                errors.append({
+                    'row': idx + 1,
+                    'error': f'Missing or invalid EWC code: "{ewc_code}"',
+                    'ewc_code': ewc_code
+                })
+            else:
+                weight = estimate_weight_stub(ewc_code, row)
+            
+            new_row = dict(row)
+            new_row['estimated_weight_tonnes'] = weight
+            processed_rows.append(new_row)
+            
+            if progress_callback and idx % 10 == 0:
+                progress = 10 + int((idx / total_rows) * 70)
+                progress_callback(progress)
+    
+    # Report progress: processing complete
+    if progress_callback:
+        progress_callback(90)
     
     # Aggregate by EWC code
     aggregated = {}
