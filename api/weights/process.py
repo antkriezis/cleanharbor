@@ -29,16 +29,19 @@ from estimate_weights import (
 )
 
 
-def process_weight_job(job_id: str) -> dict:
+def process_weight_job(job_id: str, debug_mode: bool = False) -> dict:
     """
     Process a weight estimation job.
     
     Args:
         job_id: UUID of the weight job to process
+        debug_mode: If True, enable detailed logging and limit to 5 rows
         
     Returns:
         Result dictionary with outputs and any errors
     """
+    print(f"[WEIGHT_PROCESS] Starting job {job_id}, debug_mode={debug_mode}")
+    
     # Initialize Supabase
     supabase: Client = create_client(
         os.getenv('SUPABASE_URL'),
@@ -60,6 +63,7 @@ def process_weight_job(job_id: str) -> dict:
         raise ValueError(f'Invalid job type: {job_type}. Expected "weights"')
     
     input_mode = job.get('input_mode')
+    print(f"[WEIGHT_PROCESS] input_mode={input_mode}")
     
     # Create progress callback that updates Supabase
     def update_progress(pct: int):
@@ -94,7 +98,8 @@ def process_weight_job(job_id: str) -> dict:
             extraction_result=source_job['result'],
             progress_callback=update_progress,
             use_llm=True,  # Use LLM API for real estimation
-            model='gpt-5'
+            model='gpt-5',
+            debug=debug_mode
         )
         
     elif input_mode == 'upload_new':
@@ -114,7 +119,8 @@ def process_weight_job(job_id: str) -> dict:
             csv_text=csv_text,
             progress_callback=update_progress,
             use_llm=True,  # Use LLM API for real estimation
-            model='gpt-5'
+            model='gpt-5',
+            debug=debug_mode
         )
         
     else:
@@ -166,15 +172,31 @@ def process_weight_job(job_id: str) -> dict:
         'aggregated_csv_base64': aggregated_csv_base64,
     }
     
+    # Include debug info if available
+    debug_info = estimation_result.get('debug_info')
+    if debug_info:
+        result['debug_info'] = debug_info
+        print(f"[WEIGHT_DEBUG] Debug info has {len(debug_info)} entries")
+    
+    # Log final summary
+    print(f"[WEIGHT_PROCESS] Complete: {result['total_rows']} rows, {result['total_codes']} codes, {result['total_weight_tonnes']} tonnes, {result['errors_count']} errors")
+    
     # Update job with result
-    supabase.table('jobs').update({
+    update_data = {
         'status': 'done',
         'progress': 100,
         'result': result,
         'preview_json': preview_json,
         'row_errors': estimation_result['errors'] if estimation_result['errors'] else None,
         'csv_data': None  # Clear input to save storage
-    }).eq('id', job_id).execute()
+    }
+    
+    # Store debug info separately if present (for inspection)
+    if debug_info:
+        # Store first 10 debug entries in a separate field for easy inspection
+        update_data['preview_json']['debug_sample'] = debug_info[:10]
+    
+    supabase.table('jobs').update(update_data).eq('id', job_id).execute()
     
     return result
 
@@ -232,10 +254,13 @@ class handler(BaseHTTPRequestHandler):
                 self._error(400, 'Missing jobId')
                 return
             
+            # Check for debug mode
+            debug_mode = data.get('debug', False) or os.getenv('DEBUG_WEIGHTS') == '1'
+            
             # Process the job
             try:
-                result = process_weight_job(job_id)
-                self._send_json(200, {
+                result = process_weight_job(job_id, debug_mode=debug_mode)
+                response_data = {
                     'success': True,
                     'jobId': job_id,
                     'result': {
@@ -244,7 +269,12 @@ class handler(BaseHTTPRequestHandler):
                         'total_weight_tonnes': result.get('total_weight_tonnes'),
                         'errors_count': result.get('errors_count', 0)
                     }
-                })
+                }
+                # Include debug info in response if present
+                if result.get('debug_info'):
+                    response_data['debug_info'] = result['debug_info']
+                
+                self._send_json(200, response_data)
             except ValueError as e:
                 # Update job with error
                 try:
