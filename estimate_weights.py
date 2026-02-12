@@ -226,7 +226,7 @@ Return ONLY a decimal number (e.g., 2.500):"""
     try:
         response = client.chat.completions.create(
             model=model,
-            temperature=0,  # Deterministic
+            # Note: temperature removed as gpt-5 only supports default (1)
             messages=[
                 {"role": "system", "content": "You are a precise waste weight estimator. You must respond with ONLY a single decimal number representing tonnes. No text, no units, no explanation."},
                 {"role": "user", "content": prompt}
@@ -403,44 +403,28 @@ def estimate_weights_from_rows(
         if not ewc_code or ewc_code in ('', 'N/A', 'Unknown'):
             weight = 0.0
             error_msg = f'Missing or invalid EWC code: "{ewc_code}"'
-        elif use_llm and openai_client:
-            # Use LLM estimation
-            weight, error_msg = estimate_weight_llm(
-                ewc_code, row_context, openai_client, model, 
-                debug=(debug and idx < 5)  # Only debug first 5
-            )
-            if error_msg:
-                # LLM failed - use stub as fallback but record the error
-                print(f"[WEIGHT_WARN] Row {idx+1}: LLM failed ({error_msg}), using stub")
-                weight = estimate_weight_stub(ewc_code, row_context)
-                errors.append({
-                    'row': idx + 1,
-                    'error': f'LLM failed, used stub: {error_msg}',
-                    'ewc_code': ewc_code,
-                    'fallback_weight': weight
-                })
-                error_msg = None  # Clear since we have a fallback
-        else:
-            # Use stub estimation
-            weight = estimate_weight_stub(ewc_code, row_context)
-        
-        # Record any remaining errors
-        if error_msg:
             errors.append({
                 'row': idx + 1,
                 'error': error_msg,
                 'ewc_code': ewc_code
             })
+        elif use_llm and openai_client:
+            # Use LLM estimation - NO FALLBACK TO STUB
+            weight, error_msg = estimate_weight_llm(
+                ewc_code, row_context, openai_client, model, 
+                debug=(debug and idx < 5)  # Only debug first 5
+            )
+            if error_msg:
+                # LLM failed - FAIL THE JOB, don't use misleading stub values
+                print(f"[WEIGHT_ERROR] Row {idx+1}: LLM failed ({error_msg})")
+                raise ValueError(f"Weight estimation failed for row {idx+1} (EWC: {ewc_code}): {error_msg}")
+        else:
+            # Only use stub if explicitly not using LLM
+            weight = estimate_weight_stub(ewc_code, row_context)
         
         # Ensure weight is a number (never None in output)
         if weight is None:
-            weight = 0.0
-            if not error_msg:  # Don't double-record
-                errors.append({
-                    'row': idx + 1,
-                    'error': 'Weight estimation returned None',
-                    'ewc_code': ewc_code
-                })
+            raise ValueError(f"Weight estimation returned None for row {idx+1} (EWC: {ewc_code})")
         
         # Add weight to row
         new_row = dict(row)
