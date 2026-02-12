@@ -28,8 +28,14 @@ from typing import Optional, Callable
 
 from supabase import create_client, Client
 
-# PuLP is imported lazily in solve_optimization() to avoid slowing down other functions
-# that share this codebase on Vercel
+# Try to import PuLP - will fail gracefully if not available
+try:
+    import pulp
+    PULP_AVAILABLE = True
+except ImportError:
+    PULP_AVAILABLE = False
+    print("[OPTIMIZE] Warning: PuLP not available. Install with: pip install pulp")
+
 
 # ----------------------------
 # Constants
@@ -289,12 +295,8 @@ def solve_optimization(
     Raises:
         ValueError: If problem is infeasible or solver fails
     """
-    # Lazy import PuLP - only loaded when optimization is actually called
-    # This prevents slowing down other Vercel functions that don't need PuLP
-    try:
-        import pulp
-    except ImportError:
-        raise ValueError("PuLP is not installed. Install with: pip install pulp")
+    if not PULP_AVAILABLE:
+        raise ValueError("PuLP is not installed. Cannot run optimization.")
     
     # Extract unique codes and facilities
     codes = list(set(r['code'] for r in model_data))
@@ -632,12 +634,10 @@ if __name__ == '__main__':
         print("[WARN] python-dotenv not installed, using system env vars")
     
     # Check for PuLP
-    try:
-        import pulp
-        print("[OK] PuLP is available")
-    except ImportError:
+    if not PULP_AVAILABLE:
         print("ERROR: PuLP is required. Install with: pip install pulp")
         sys.exit(1)
+    print("[OK] PuLP is available")
     
     # Check environment
     if not os.getenv('SUPABASE_URL') or not os.getenv('SUPABASE_SERVICE_ROLE_KEY'):
