@@ -196,7 +196,7 @@ def estimate_weights_from_rows(
     rows: list[dict],
     columns: list[str],
     progress_callback: Optional[Callable[[int], None]] = None,
-    use_llm: bool = False,
+    use_llm: bool = True,
     openai_client: Optional[OpenAI] = None,
     model: str = "gpt-5"
 ) -> tuple[list[dict], list[dict], list[dict]]:
@@ -300,7 +300,7 @@ def estimate_weights_from_rows(
 def estimate_weights_from_csv(
     csv_text: str,
     progress_callback: Optional[Callable[[int], None]] = None,
-    use_llm: bool = False,
+    use_llm: bool = True,
     model: str = "gpt-5"
 ) -> dict:
     """
@@ -363,7 +363,7 @@ def estimate_weights_from_csv(
 def estimate_weights_from_extraction(
     extraction_result: dict,
     progress_callback: Optional[Callable[[int], None]] = None,
-    use_llm: bool = False,
+    use_llm: bool = True,
     model: str = "gpt-5"
 ) -> dict:
     """
@@ -425,7 +425,7 @@ def estimate_weights_from_extraction(
 def estimate_weights_from_file(
     csv_path: Path,
     output_dir: Optional[Path] = None,
-    use_llm: bool = False,
+    use_llm: bool = True,
     model: str = "gpt-5"
 ) -> tuple[Path, Path]:
     """
