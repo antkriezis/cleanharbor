@@ -15,6 +15,7 @@ import hashlib
 import io
 import json
 import os
+import re
 from pathlib import Path
 from typing import Optional, Callable
 
@@ -82,9 +83,6 @@ def estimate_weight_stub(ewc_code: str, row_context: dict) -> float:
     
     return round(weight, 3)
 
-
-import json
-import re
 
 # Debug log storage (populated during debug mode)
 _debug_logs = []
