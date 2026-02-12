@@ -93,7 +93,8 @@ def process_weight_job(job_id: str) -> dict:
         estimation_result = estimate_weights_from_extraction(
             extraction_result=source_job['result'],
             progress_callback=update_progress,
-            use_llm=False  # Use stub for now
+            use_llm=True,  # Use LLM API for real estimation
+            model='gpt-5'
         )
         
     elif input_mode == 'upload_new':
@@ -112,7 +113,8 @@ def process_weight_job(job_id: str) -> dict:
         estimation_result = estimate_weights_from_csv(
             csv_text=csv_text,
             progress_callback=update_progress,
-            use_llm=False  # Use stub for now
+            use_llm=True,  # Use LLM API for real estimation
+            model='gpt-5'
         )
         
     else:
@@ -205,7 +207,7 @@ class handler(BaseHTTPRequestHandler):
     def do_POST(self):
         try:
             # Validate environment
-            required_vars = ['SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']
+            required_vars = ['OPENAI_API_KEY', 'SUPABASE_URL', 'SUPABASE_SERVICE_ROLE_KEY']
             missing = [v for v in required_vars if not os.getenv(v)]
             if missing:
                 self._error(500, 'Server configuration error')
