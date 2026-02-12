@@ -25,6 +25,18 @@
     "api/weights/status.py": {
       "memory": 256,
       "maxDuration": 10
+    },
+    "api/optimize/start.py": {
+      "memory": 512,
+      "maxDuration": 30
+    },
+    "api/optimize/process.py": {
+      "memory": 1024,
+      "maxDuration": 300
+    },
+    "api/optimize/status.py": {
+      "memory": 256,
+      "maxDuration": 10
     }
   },
   "routes": [
@@ -51,6 +63,18 @@
     {
       "src": "/api/weights/status",
       "dest": "/api/weights/status.py"
+    },
+    {
+      "src": "/api/optimize/start",
+      "dest": "/api/optimize/start.py"
+    },
+    {
+      "src": "/api/optimize/process",
+      "dest": "/api/optimize/process.py"
+    },
+    {
+      "src": "/api/optimize/status",
+      "dest": "/api/optimize/status.py"
     }
   ]
 }

@@ -1,1 +1,8 @@
 .env
+
+# Data files (user-specific)
+data/*.csv
+
+# Output files (generated)
+outputs/*.csv
+outputs/*.json
