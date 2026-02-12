@@ -66,7 +66,8 @@ class handler(BaseHTTPRequestHandler):
             parsed = urlparse(self.path)
             params = parse_qs(parsed.query)
             
-            job_id = params.get('job_id', [None])[0]
+            # Support both 'job_id' and 'id' parameter names for flexibility
+            job_id = params.get('job_id', [None])[0] or params.get('id', [None])[0]
             if not job_id:
                 self._error(400, 'Missing required parameter: job_id')
                 return

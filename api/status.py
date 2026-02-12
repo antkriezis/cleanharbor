@@ -4,6 +4,7 @@ CleanHarbor - Job Status Endpoint
 GET /api/status?id=<jobId>
 - Returns current job status
 - If done, includes the result
+- Handles both extraction and weight estimation jobs
 """
 
 import json
@@ -55,7 +56,8 @@ class handler(BaseHTTPRequestHandler):
             parsed = urlparse(self.path)
             params = parse_qs(parsed.query)
             
-            job_id = params.get('id', [None])[0]
+            # Support both 'id' and 'job_id' parameter names for flexibility
+            job_id = params.get('id', [None])[0] or params.get('job_id', [None])[0]
             if not job_id:
                 self._error(400, 'Missing required parameter: id')
                 return
@@ -66,10 +68,11 @@ class handler(BaseHTTPRequestHandler):
                 os.getenv('SUPABASE_SERVICE_ROLE_KEY')
             )
             
-            # Fetch job (excluding pdf_data to reduce response size)
+            # Fetch job with all relevant fields for any job type
+            # Excludes pdf_data and csv_data to reduce response size
             try:
                 response = supabase.table('jobs').select(
-                    'id, status, filename, model, result, error, created_at'
+                    'id, job_type, status, progress, filename, model, result, preview_json, row_errors, error, created_at'
                 ).eq('id', job_id).single().execute()
                 job = response.data
             except Exception as e:
@@ -80,17 +83,54 @@ class handler(BaseHTTPRequestHandler):
                 self._error(404, f'Job not found: {job_id}')
                 return
             
-            # Build response based on status
+            # Determine job type (default to 'extraction' for backwards compatibility)
+            job_type = job.get('job_type') or 'extraction'
+            
+            # Build base response
             response_data = {
                 'success': True,
                 'jobId': job['id'],
+                'job_type': job_type,
                 'status': job['status'],
+                'progress': job.get('progress', 0),
                 'filename': job.get('filename'),
                 'created_at': job.get('created_at')
             }
             
             if job['status'] == 'done':
-                response_data['result'] = job.get('result')
+                result = job.get('result', {})
+                
+                if job_type == 'weights':
+                    # Weight estimation job - include summary and preview
+                    response_data['summary'] = {
+                        'total_rows': result.get('total_rows'),
+                        'total_codes': result.get('total_codes'),
+                        'total_weight_tonnes': result.get('total_weight_tonnes'),
+                        'errors_count': result.get('errors_count', 0)
+                    }
+                    
+                    # Include preview data (aggregated table)
+                    preview = job.get('preview_json')
+                    if preview:
+                        response_data['preview'] = preview
+                    
+                    # Include download URLs
+                    host = self.headers.get('Host', '')
+                    if host:
+                        base_url = f"https://{host}/api/weights/status?job_id={job_id}"
+                        response_data['download_urls'] = {
+                            'full_csv': f"{base_url}&download=full",
+                            'aggregated_csv': f"{base_url}&download=aggregated"
+                        }
+                    
+                    # Include row-level errors if any
+                    row_errors = job.get('row_errors')
+                    if row_errors:
+                        response_data['row_errors'] = row_errors
+                else:
+                    # Extraction job - return full result as before
+                    response_data['result'] = result
+                    
             elif job['status'] == 'error':
                 response_data['error'] = job.get('error')
             
