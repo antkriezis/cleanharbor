@@ -107,135 +107,347 @@ def clear_debug_logs():
     _debug_logs.clear()
 
 
+# ----------------------------
+# Constants
+# ----------------------------
+MAX_WEIGHT_PER_ROW_TONNES = 5.0  # Sanity cap for single row
+CHUNK_SIZE = 100  # Rows per LLM call
+MAX_SOURCE_TEXT_LEN = 200
+MAX_REMARKS_LEN = 120
+
+
+def _truncate(text: str, max_len: int) -> str:
+    """Truncate text to max length."""
+    if not text:
+        return ""
+    text = str(text).strip()
+    if len(text) > max_len:
+        return text[:max_len-3] + "..."
+    return text
+
+
+def _safe_float(val, default=0.0) -> float:
+    """Safely convert value to float."""
+    if val is None or val == '':
+        return default
+    try:
+        # Handle comma as decimal separator
+        return float(str(val).replace(',', '.'))
+    except (ValueError, TypeError):
+        return default
+
+
+def _build_row_context(row: dict, row_id: int, ewc_column: str) -> dict:
+    """
+    Build a compact row context dict for LLM prompt.
+    Includes all relevant fields with truncation for token efficiency.
+    """
+    return {
+        "row_id": row_id,
+        "ewc_code": row.get(ewc_column, '') or row.get('EWC Code', '') or '',
+        "material": row.get('Material', '') or row.get('material', '') or '',
+        "item_name": row.get('Item Name', '') or row.get('item_name', '') or '',
+        "qty": row.get('Qty', '') or row.get('quantity_value', '') or '',
+        "unit": row.get('Unit', '') or row.get('quantity_unit', '') or '',
+        "location": row.get('Location', '') or row.get('location', '') or '',
+        "hazard_flags": row.get('Hazard Flags', '') or row.get('hazard_flags', '') or '',
+        "remarks": _truncate(row.get('Remarks', '') or row.get('remarks', '') or '', MAX_REMARKS_LEN),
+        "source_text": _truncate(row.get('Source Text', '') or row.get('source_text', '') or '', MAX_SOURCE_TEXT_LEN),
+        "chapter": row.get('Chapter', '') or row.get('chapter', '') or '',
+        "section": row.get('Section', '') or row.get('section', '') or '',
+    }
+
+
+def _build_batch_prompt(row_contexts: list[dict]) -> str:
+    """
+    Build the LLM prompt for batch weight estimation.
+    Uses full row context for accurate estimation.
+    """
+    # Build items list with full context
+    items_lines = []
+    for ctx in row_contexts:
+        qty_str = f"{ctx['qty']} {ctx['unit']}".strip() if ctx['qty'] else "(not specified)"
+        
+        item_desc = f"""Row {ctx['row_id']}:
+  EWC Code: {ctx['ewc_code'] or '(none)'}
+  Material: {ctx['material'] or '(none)'}
+  Item Name: {ctx['item_name'] or '(none)'}
+  Qty/Unit: {qty_str}
+  Location: {ctx['location'] or '(none)'}
+  Hazard Flags: {ctx['hazard_flags'] or '(none)'}
+  Remarks: {ctx['remarks'] or '(none)'}
+  Source: {ctx['source_text'] or '(none)'}"""
+        items_lines.append(item_desc)
+    
+    items_text = "\n\n".join(items_lines)
+    
+    prompt = f"""You are a waste weight estimation expert for maritime ship recycling (IHM - Inventory of Hazardous Materials).
+
+## Task
+Estimate the weight in TONNES (metric tons) for EACH row below. These are individual line items from a ship's hazardous materials inventory.
+
+## Items ({len(row_contexts)} rows):
+{items_text}
+
+## Estimation Rules (CRITICAL - follow exactly):
+
+### Primary: Use Qty + Unit when available
+- kg → divide by 1000 to get tonnes (e.g., 500 kg = 0.5 tonnes)
+- L (liters) → use material-appropriate density:
+  - Oil/fuel: ~0.85 kg/L → 0.00085 tonnes/L
+  - Water-based: ~1.0 kg/L → 0.001 tonnes/L  
+  - Paint: ~1.2-1.4 kg/L → 0.0013 tonnes/L
+- m³ (cubic meters) → use density based on material type
+- pcs/units/items → estimate typical mass per piece:
+  - Small electronics (switches, sensors): 0.0001-0.001 tonnes each
+  - Batteries (small): 0.001-0.01 tonnes each
+  - Large equipment: 0.01-0.1 tonnes each
+- m (linear meters) → estimate cross-section × length × density
+- m² (area) → estimate thickness × area × density
+
+### Secondary: When Qty/Unit missing or unclear
+- Use Material, Item Name, Remarks, Source Text as context
+- Estimate conservatively based on typical quantities for that item type on ships
+- Most single items: 0.001 - 0.1 tonnes
+- Small quantities of hazardous materials: 0.0001 - 0.01 tonnes
+
+### Guardrails (IMPORTANT):
+- Most per-row weights should be SMALL (< 0.5 tonnes)
+- Values > 1 tonne per row are RARE and need clear justification from Qty
+- Maximum allowed per row: {MAX_WEIGHT_PER_ROW_TONNES} tonnes (if calculation exceeds this, cap at {MAX_WEIGHT_PER_ROW_TONNES})
+- Minimum: 0.0001 tonnes (even for tiny items)
+- NEVER output large values (10+ tonnes) unless Qty explicitly shows bulk quantity
+
+## Response Format (STRICT JSON):
+Return ONLY a JSON object. No explanation, no prose.
+{{
+  "estimates": [
+    {{"row_id": 0, "weight": 0.123}},
+    {{"row_id": 1, "weight": 0.045}},
+    ...
+  ]
+}}
+
+You MUST return exactly {len(row_contexts)} entries, one per row.
+"weight" must be a positive number (float) representing tonnes."""
+
+    return prompt
+
+
+def estimate_weights_batch_chunk(
+    row_contexts: list[dict],
+    client: OpenAI,
+    model: str = "gpt-5",
+    debug: bool = False
+) -> tuple[list[dict], list[dict]]:
+    """
+    Estimate weights for a CHUNK of rows in a single API call.
+    
+    Args:
+        row_contexts: List of row context dicts (from _build_row_context)
+        client: OpenAI client instance
+        model: Model to use
+        debug: Enable detailed logging
+        
+    Returns:
+        Tuple of (results, errors) where:
+        - results: List of {"row_id": int, "weight": float, "capped": bool}
+        - errors: List of {"row_id": int, "error": str}
+    """
+    prompt = _build_batch_prompt(row_contexts)
+    
+    if debug:
+        _log_debug("Chunk prompt", {
+            'num_rows': len(row_contexts),
+            'prompt_length': len(prompt),
+            'first_3_contexts': row_contexts[:3]
+        })
+    
+    try:
+        print(f"[WEIGHT] LLM call for {len(row_contexts)} rows...")
+        response = client.chat.completions.create(
+            model=model,
+            messages=[
+                {
+                    "role": "system", 
+                    "content": "You are a precise waste weight estimator. Return ONLY valid JSON with weight estimates in tonnes. Be consistent and deterministic in your estimates."
+                },
+                {"role": "user", "content": prompt}
+            ],
+            response_format={"type": "json_object"},
+            # Note: temperature=0 not supported by gpt-5, relying on structured output for consistency
+        )
+        
+        raw_response = response.choices[0].message.content
+        
+        if debug:
+            _log_debug("LLM raw response", {'response': raw_response[:1000]})
+        
+        # Parse JSON
+        result = json.loads(raw_response)
+        estimates = result.get("estimates", [])
+        
+        if debug:
+            _log_debug("Parsed estimates", {'count': len(estimates), 'first_5': estimates[:5]})
+        
+        # Validate and process results
+        results = []
+        errors = []
+        row_id_set = {ctx['row_id'] for ctx in row_contexts}
+        found_ids = set()
+        
+        for est in estimates:
+            row_id = est.get("row_id")
+            weight = est.get("weight")
+            
+            if row_id is None:
+                errors.append({"row_id": -1, "error": f"Missing row_id in estimate: {est}"})
+                continue
+                
+            if row_id not in row_id_set:
+                errors.append({"row_id": row_id, "error": f"Unexpected row_id {row_id}"})
+                continue
+            
+            found_ids.add(row_id)
+            
+            # Validate weight
+            try:
+                weight_float = float(weight)
+            except (ValueError, TypeError):
+                errors.append({"row_id": row_id, "error": f"Invalid weight value: {weight}"})
+                weight_float = 0.001  # Fallback
+            
+            if weight_float < 0:
+                errors.append({"row_id": row_id, "error": f"Negative weight: {weight_float}"})
+                weight_float = 0.0001
+            
+            # Apply cap guardrail
+            capped = False
+            if weight_float > MAX_WEIGHT_PER_ROW_TONNES:
+                errors.append({
+                    "row_id": row_id, 
+                    "error": f"Weight capped from {weight_float:.3f} to {MAX_WEIGHT_PER_ROW_TONNES} tonnes"
+                })
+                weight_float = MAX_WEIGHT_PER_ROW_TONNES
+                capped = True
+            
+            results.append({
+                "row_id": row_id,
+                "weight": round(weight_float, 4),
+                "capped": capped
+            })
+        
+        # Check for missing row_ids
+        missing_ids = row_id_set - found_ids
+        for missing_id in missing_ids:
+            errors.append({"row_id": missing_id, "error": "No estimate returned by LLM"})
+            # Add conservative fallback for missing
+            results.append({
+                "row_id": missing_id,
+                "weight": 0.001,
+                "capped": False
+            })
+        
+        print(f"[WEIGHT] Chunk complete: {len(results)} weights, {len(errors)} errors")
+        return results, errors
+        
+    except json.JSONDecodeError as e:
+        error_msg = f"JSON parse error: {str(e)}"
+        print(f"[WEIGHT_ERROR] {error_msg}")
+        # Return errors for all rows in chunk
+        errors = [{"row_id": ctx['row_id'], "error": error_msg} for ctx in row_contexts]
+        raise ValueError(f"LLM response was not valid JSON: {error_msg}")
+        
+    except Exception as e:
+        error_msg = f"LLM API error: {type(e).__name__}: {str(e)}"
+        print(f"[WEIGHT_ERROR] {error_msg}")
+        raise ValueError(error_msg)
+
+
 def estimate_weights_batch(
     rows: list[dict],
     ewc_column: str,
     client: OpenAI,
     model: str = "gpt-5",
-    debug: bool = False
-) -> list[dict]:
+    debug: bool = False,
+    progress_callback: Callable[[int], None] = None
+) -> tuple[list[dict], list[dict]]:
     """
-    Estimate weights for ALL rows in a SINGLE batch API call.
+    Estimate weights for ALL rows using batch LLM calls with chunking.
+    
+    Uses full row context for accurate per-row estimation.
+    Automatically chunks large datasets.
     
     Args:
-        rows: List of row dictionaries
+        rows: List of row dictionaries from CSV
         ewc_column: Name of the EWC code column
         client: OpenAI client instance
         model: Model to use for estimation
         debug: If True, log detailed debug info
+        progress_callback: Optional callback for progress updates
         
     Returns:
-        List of dicts with {item_index, weight_tonnes} for each row
+        Tuple of (results, all_errors) where:
+        - results: List of {"row_id": int, "weight": float, "capped": bool}
+        - all_errors: List of {"row_id": int, "error": str}
         
     Raises:
-        ValueError: If API call fails
+        ValueError: If API call fails catastrophically
     """
-    # Build items list for prompt
-    items_list_lines = []
-    for i, row in enumerate(rows):
-        ewc_code = row.get(ewc_column, '')
-        material = row.get('material') or row.get('Material') or row.get('item_name') or ''
-        qty = row.get('quantity_value') or row.get('Qty') or ''
-        unit = row.get('quantity_unit') or row.get('Unit') or ''
-        location = row.get('location') or row.get('Location') or ''
-        
-        items_list_lines.append(
-            f"Item {i}: EWC={ewc_code}, Material={material}, Qty={qty} {unit}, Location={location}"
-        )
+    total_rows = len(rows)
+    print(f"[WEIGHT] Starting batch estimation for {total_rows} rows (chunk size: {CHUNK_SIZE})")
     
-    items_list = "\n".join(items_list_lines)
+    # Build all row contexts
+    row_contexts = [_build_row_context(row, i, ewc_column) for i, row in enumerate(rows)]
     
-    prompt = f"""You are a waste weight estimation expert for maritime/ship recycling.
-
-Estimate the weight in TONNES (metric tons) for each of the following waste items.
-
-## Items to estimate:
-{items_list}
-
-## Rules:
-- If quantity is in pieces (pcs), estimate typical weight per piece for this material type
-- If quantity is in liters (L) or cubic meters (m3), use appropriate density
-- If quantity is in kg, convert to tonnes (divide by 1000)
-- If no quantity is given, estimate a typical small amount (0.01-0.1 tonnes)
-- Use the EWC code to understand the waste type
-- Return positive numbers only. Minimum 0.001 tonnes.
-
-## Response format:
-Return ONLY a JSON object with this exact structure:
-{{
-  "weights": [
-    {{"item_index": 0, "weight_tonnes": 1.234}},
-    {{"item_index": 1, "weight_tonnes": 0.567}},
-    ...
-  ]
-}}
-
-You MUST return exactly {len(rows)} weight entries, one for each item listed above.
-Return ONLY valid JSON, no other text."""
-
     if debug:
-        _log_debug("Batch prompt", {'num_items': len(rows), 'prompt_length': len(prompt)})
+        _log_debug("Row contexts built", {
+            'total': len(row_contexts),
+            'sample': row_contexts[:2]
+        })
     
-    try:
-        print(f"[WEIGHT] Calling LLM for batch estimation of {len(rows)} items...")
-        response = client.chat.completions.create(
-            model=model,
-            messages=[
-                {"role": "system", "content": "You are a precise waste weight estimator. Return ONLY valid JSON."},
-                {"role": "user", "content": prompt}
-            ],
-            response_format={"type": "json_object"},
+    # Process in chunks
+    all_results = []
+    all_errors = []
+    num_chunks = (total_rows + CHUNK_SIZE - 1) // CHUNK_SIZE
+    
+    for chunk_idx in range(num_chunks):
+        start_idx = chunk_idx * CHUNK_SIZE
+        end_idx = min(start_idx + CHUNK_SIZE, total_rows)
+        chunk_contexts = row_contexts[start_idx:end_idx]
+        
+        print(f"[WEIGHT] Processing chunk {chunk_idx + 1}/{num_chunks} (rows {start_idx}-{end_idx-1})")
+        
+        chunk_results, chunk_errors = estimate_weights_batch_chunk(
+            chunk_contexts, client, model, debug=(debug and chunk_idx == 0)
         )
         
-        raw_response = response.choices[0].message.content
-        print(f"[WEIGHT] LLM response received, parsing...")
+        all_results.extend(chunk_results)
+        all_errors.extend(chunk_errors)
         
-        if debug:
-            _log_debug("Batch response", {'raw': raw_response[:500]})
-        
-        # Parse JSON response
-        result = json.loads(raw_response)
-        weights = result.get("weights", [])
-        
-        if len(weights) != len(rows):
-            print(f"[WEIGHT_WARN] Expected {len(rows)} weights, got {len(weights)}")
-        
-        # Build results with validation
-        weight_results = []
-        for i in range(len(rows)):
-            # Find weight for this index
-            weight_entry = next(
-                (w for w in weights if w.get("item_index") == i),
-                None
-            )
-            
-            if weight_entry:
-                weight = weight_entry.get("weight_tonnes", 0.0)
-                try:
-                    weight = round(float(weight), 3)
-                except (ValueError, TypeError):
-                    weight = 0.001
-            else:
-                # Missing entry - use minimal default
-                weight = 0.001
-                print(f"[WEIGHT_WARN] Missing weight for item {i}, using 0.001")
-            
-            weight_results.append({
-                "item_index": i,
-                "weight_tonnes": weight
-            })
-        
-        print(f"[WEIGHT] Successfully parsed {len(weight_results)} weights")
-        return weight_results
-        
-    except json.JSONDecodeError as e:
-        error_msg = f"Failed to parse LLM JSON response: {str(e)}"
-        print(f"[WEIGHT_ERROR] {error_msg}")
-        raise ValueError(error_msg)
-    except Exception as e:
-        error_msg = f"LLM batch API call failed: {type(e).__name__}: {str(e)}"
-        print(f"[WEIGHT_ERROR] {error_msg}")
-        raise ValueError(error_msg)
+        # Report progress
+        if progress_callback:
+            progress = int(((chunk_idx + 1) / num_chunks) * 80) + 10
+            progress_callback(progress)
+    
+    # Sort results by row_id for consistent ordering
+    all_results.sort(key=lambda x: x['row_id'])
+    
+    print(f"[WEIGHT] Batch complete: {len(all_results)} weights, {len(all_errors)} total errors")
+    
+    if debug:
+        _log_debug("Final results summary", {
+            'total_weights': len(all_results),
+            'total_errors': len(all_errors),
+            'capped_count': sum(1 for r in all_results if r.get('capped')),
+            'weight_stats': {
+                'min': min(r['weight'] for r in all_results) if all_results else 0,
+                'max': max(r['weight'] for r in all_results) if all_results else 0,
+                'sum': sum(r['weight'] for r in all_results) if all_results else 0
+            }
+        })
+    
+    return all_results, all_errors
 
 
 # ----------------------------
@@ -361,46 +573,55 @@ def estimate_weights_from_rows(
     
     if use_llm and openai_client:
         # ================================================================
-        # BATCH LLM ESTIMATION - Single API call for ALL rows
+        # BATCH LLM ESTIMATION - Per-row with full context, then aggregate
         # ================================================================
         print(f"[WEIGHT] Using batch LLM estimation for {len(rows)} rows...")
         
-        # Call LLM once for all rows
-        weight_results = estimate_weights_batch(
+        # Call LLM with chunking support
+        weight_results, batch_errors = estimate_weights_batch(
             rows=rows,
             ewc_column=ewc_column,
             client=openai_client,
             model=model,
-            debug=debug
+            debug=debug,
+            progress_callback=progress_callback
         )
         
-        # Report progress: LLM complete
-        if progress_callback:
-            progress_callback(80)
+        # Convert batch errors to our error format
+        for err in batch_errors:
+            errors.append({
+                'row': err['row_id'] + 1,  # 1-indexed for user display
+                'error': err['error'],
+                'ewc_code': rows[err['row_id']].get(ewc_column, '') if err['row_id'] >= 0 else ''
+            })
+        
+        # Build lookup for weights by row_id
+        weight_lookup = {r['row_id']: r['weight'] for r in weight_results}
         
         # Apply weights to rows
         for idx, row in enumerate(rows):
             ewc_code = row.get(ewc_column, '')
             
-            # Check for invalid EWC code
+            # Check for invalid EWC code (add to errors if not already there)
             if not ewc_code or ewc_code in ('', 'N/A', 'Unknown'):
-                errors.append({
-                    'row': idx + 1,
-                    'error': f'Missing or invalid EWC code: "{ewc_code}"',
-                    'ewc_code': ewc_code
-                })
+                # Only add if not already in errors from batch
+                if not any(e.get('row') == idx + 1 for e in errors):
+                    errors.append({
+                        'row': idx + 1,
+                        'error': f'Missing or invalid EWC code: "{ewc_code}"',
+                        'ewc_code': ewc_code
+                    })
             
-            # Get weight from batch results
-            weight_entry = next(
-                (w for w in weight_results if w.get("item_index") == idx),
-                {"weight_tonnes": 0.001}
-            )
-            weight = weight_entry.get("weight_tonnes", 0.001)
+            # Get weight from batch results (default to 0.001 if missing)
+            weight = weight_lookup.get(idx, 0.001)
             
             # Add weight to row
             new_row = dict(row)
-            new_row['estimated_weight_tonnes'] = weight
+            new_row['estimated_weight_tonnes'] = round(weight, 4)
             processed_rows.append(new_row)
+        
+        print(f"[WEIGHT] Applied {len(weight_results)} weights to rows")
+        
     else:
         # ================================================================
         # STUB ESTIMATION - Per-row (only if LLM disabled)
